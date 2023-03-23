@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Locations</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container text-center">
+  <a class="h2" th:href="@{/locations}">Locations</a>
+  <div class="container-fluid text-center">
+    <div><h2>Liste des locations : </h2></div>
+    <div class="m-2">
+      <a class="h3" th:href="@{/locations/new}">Add New Location</a>
+    </div>
+    <div>
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+          <th>Id</th> <th>Slug</th> <th>Designation</th> <th>Address</th> <th>Locality_id</th> <th>Website</th> <th>Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="location : ${listLocations}">
+          <td>[[${location.id}]]</td>
+          <td>[[${location.slug}]]</td>
+          <td>[[${location.designation}]]</td>
+          <td>[[${location.address}]]</td>
+          <td>[[${location.locality_id}]]</td>
+          <td>[[${location.website}]]</td>
+          <td>[[${location.phone}]]</td>
+
+          <td>
+            <a class="h4 mr-3" th:href="@{'/locations/edit/' +  ${location.id}}">Edit</a>
+            <a class="h4" th:href="@{'/locations/delete/' +  ${location.id}}">Delete</a>
+          </td>
+        </th:block>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
