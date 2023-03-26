@@ -16,22 +16,23 @@
         [[${message}]]
       </div>
       <div>
-        <table class="table">
-          <thead class="thead-dark">
+        <table class="table table-hover table-dark table-bordered">
+          <thead>
             <tr>
-              <th>Id</th>
-              <th>Slug</th>
-              <th>Designation</th>
-              <th>Address</th>
-              <th>Locality_id</th>
-              <th>Website</th>
-              <th>Phone</th>
+              <th scope="col">Id</th>
+              <th scope="col">Slug</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Address</th>
+              <th scope="col">Locality_id</th>
+              <th scope="col">Website</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             <th:block th:each="location : ${listLocations}">
               <tr>
-                <th>[[${location.id}]]</th>
+                <th scope="row">[[${location.id}]]</th>
                 <td>[[${location.slug}]]</td>
                 <td>[[${location.designation}]]</td>
                 <td>[[${location.address}]]</td>
