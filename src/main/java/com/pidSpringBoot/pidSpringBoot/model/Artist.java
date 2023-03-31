@@ -1,4 +1,4 @@
-package com.pidSpringBoot.pidSpringBoot.Artist;
+package com.pidSpringBoot.pidSpringBoot.model;
 
 
 import jakarta.persistence.*;

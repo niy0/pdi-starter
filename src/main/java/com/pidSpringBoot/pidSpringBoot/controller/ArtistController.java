@@ -1,7 +1,7 @@
 package com.pidSpringBoot.pidSpringBoot.controller;
 
-import com.pidSpringBoot.pidSpringBoot.Artist.Artist;
-import com.pidSpringBoot.pidSpringBoot.Artist.ArtistService;
+import com.pidSpringBoot.pidSpringBoot.model.Artist;
+import com.pidSpringBoot.pidSpringBoot.model.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

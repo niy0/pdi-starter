@@ -1,4 +1,4 @@
-package com.pidSpringBoot.pidSpringBoot.Artist;
+package com.pidSpringBoot.pidSpringBoot.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
