@@ -1,13 +1,14 @@
 package com.pidSpringBoot.pidSpringBoot;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class MainControlller {
 
-    @GetMapping("")
-    public String showHomePage() {
-        return "index";
+    @RequestMapping("/")
+    public String index() {
+
+        return "Greetings from Spring boot!";
     }
 }
