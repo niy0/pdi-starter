@@ -29,9 +29,9 @@ public class LocationService {
 
 
     public void delete(Integer id) throws LocationNotFoundException {
-        Long count = repository.countById(id);
+        Integer count = repository.countById(id);
         if (count == null || count == 0 ) {
-            throw new LocationNotFoundException("Location avec cette Id"+ id +" a été supprimé.");
+            throw new LocationNotFoundException("Location avec cette Id"+ id +"na pas été supprimé.");
         }
         repository.deleteById(id);
     }

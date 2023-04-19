@@ -15,6 +15,7 @@ public class Localitie {
     @Column(nullable = false,length = 60)
     private String locality;
 
+
     public Integer getId() {
         return id;
     }
