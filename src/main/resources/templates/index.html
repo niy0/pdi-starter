@@ -6,16 +6,13 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
+    <div th:replace="fragments :: menu"></div>
     <div class="container text-center">
         <h1>Bienvenue dans le projet pid 2022-2023 </h1>
-        <a class="h2" th:href="@{/locations}">Locations</a>
-        <a class="h2" th:href="@{/list_users}">List users</a>
-
-    </div>
-
-    <div class="container text-center">
-        <a class="h2" th:href="@{/login}">Login</a>
-        <h3><a th:href="@{/signup}">S'inscrire</a></h3>
+        <form class="form-inline my-2 my-lg-0" style="display:flex;">
+            <input class="form-control mr-sm-2" type="search" placeholder="rechercher" aria-label="rechercher" style="margin-right:10px;">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+        </form>
     </div>
 </body>
 </html>

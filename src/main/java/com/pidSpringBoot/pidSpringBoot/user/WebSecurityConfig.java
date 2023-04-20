@@ -60,9 +60,9 @@ public class WebSecurityConfig {
         httpSecurity.authenticationProvider(authenticationProvider());
         httpSecurity.authorizeRequests().
                 requestMatchers("/","/signup").permitAll()
-                //.requestMatchers("/locations").hasAuthority("ADMIN")
-                .requestMatchers("/admin/**").hasAuthority("Admin")
-                .requestMatchers("/member/**").hasAnyAuthority("Member","Admin")
+                .requestMatchers("/admin**").hasAuthority("Admin")
+                .requestMatchers("/member**").hasAuthority("Member")
+                //.requestMatchers("/member/**").hasAnyAuthority("Member","Admin")
                 .and()
                 .formLogin()
                     .usernameParameter("login")
@@ -70,7 +70,6 @@ public class WebSecurityConfig {
                     .permitAll()
                 .and()
                 .logout()
-                    //.logoutSuccessUrl("/")
                     .logoutSuccessHandler(logoutSuccessHandeler)
                     .permitAll();
         return httpSecurity.build();

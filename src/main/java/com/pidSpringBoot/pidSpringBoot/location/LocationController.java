@@ -15,14 +15,14 @@ import java.util.List;
 public class LocationController {
     @Autowired private LocationService service;
 
-    @GetMapping("/locations")
+    @GetMapping("/admin/locations")
     public String showLocationList(Model model){
         List<Location> listLocations = service.listAll();
         model.addAttribute("listLocations", listLocations);
         return "locations";
     }
 
-    @GetMapping("/locations/new")
+    @GetMapping("/admin/locations/new")
     public String showNewForm(Model model){
         model.addAttribute("location", new Location());
         model.addAttribute("pageTitle", "Add new location");

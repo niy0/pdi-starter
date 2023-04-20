@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface RoleRepository extends JpaRepository <Role,Integer>{
 
-    //@Query("SELECT r From `roles` where r.role = ?1 ")
+    //@Query("SELECT * From users_roles where r.role = ?1 ")
     //List<Role> findByName(String name);
 }

@@ -11,7 +11,7 @@ public class MainController {
 
     /**private UserRepository userRepository;**/
 
-    @GetMapping("")
+    @GetMapping("/")
     public String showHomePage() {
         return "index";
     }
@@ -28,17 +28,5 @@ public class MainController {
         model.addAttribute("user", new User());
         return "login";
     }**/
-
-    /**@PostMapping("/process_signup")
-    public String processRegistration(User user){
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-
-        userRepository.save(user);
-        return "signup_success";
-    }**/
-
 
 }

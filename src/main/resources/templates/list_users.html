@@ -6,19 +6,15 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
-<div class="container text-center">
+<div>
+    <div th:replace="fragments :: menu_admin"></div>
     <div class="container-fluid text-center">
         <div class="m-2">
             <h2>Liste des users</h2>
-            <a class="h4" th:href="@{/locations/new}">Add New Location</a>
-
-            <form th:action="@{/logout}">
-                <input type="submit" value="LogOut">
-            </form>
         </div>
         <div>
-            <table class="table table-hover table-dark table-bordered">
-                <thead>
+            <table class="table table-hover">
+                <thead class="table-success">
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Login</th>
@@ -42,7 +38,7 @@
                         <td>[[${user.email}]]</td>
                         <td>[[${user.langue}]]</td>
                         <td>[[${user.allRolesUser()}]]</td>
-                        <td><a th:href="@{'/admin/edit/'+ ${user.id}}">Edit</a></td>
+                        <td><a class="btn btn-outline-warning" th:href="@{'/admin/edit/'+ ${user.id}}">Edit</a></td>
                     </tr>
                 </th:block>
                 </tbody>

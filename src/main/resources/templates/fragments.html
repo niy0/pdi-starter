@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenue dans le projet pid 2022-2023</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+    <div th:fragment="menu" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse"  style="justify-content:space-around;">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/}">Home</a>
+                    </li>
+                </ul>
+                <div>
+                    <a class="btn btn-outline-primary"  th:href="@{/login}">Login</a>
+                    <a class="btn btn-outline-info" type="button" th:href="@{/signup}">S'inscrire</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div th:fragment="menu_admin" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse"  style="justify-content:space-around;">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/admin/admin_home}">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/admin/admin_home}">Profile</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" th:href="@{/admin/locations}" id="navbarDropdownMenuLink" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Locations</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" th:href="@{/locations/new}">Add New Location</a>
+                            <a class="dropdown-item" href="#">Add New Location</a>
+                        </div>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/admin/list_users}">All users</a>
+                    </li>
+                </ul>
+                <div style="display:flex;">
+                    <form th:action="@{/logout}" >
+                        <input class="btn btn-outline-warning" type="submit" value="LogOut">
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div th:fragment="menu_member" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse"  style="justify-content:space-around;">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/admin_home}">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/member_home}">Profile</a>
+                    </li>
+                </ul>
+                <div style="display:flex;">
+                    <form th:action="@{/logout}" >
+                        <input class="btn btn-outline-warning" type="submit" value="LogOut">
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <script src="https://codes.jquery.com/jquery-3.2.1.sli.min.js" integrity="" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,12 +1,10 @@
 package com.pidSpringBoot.pidSpringBoot.user;
 
-import com.pidSpringBoot.pidSpringBoot.location.Location;
-import com.pidSpringBoot.pidSpringBoot.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,7 +18,32 @@ public class UserController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @GetMapping("/list_users")
+    @GetMapping("/admin/admin_home")
+    public String homeAdmin(){
+        return "admin_home";
+    }
+
+    /**
+    @GetMapping("/admin/admin_home/{id}")
+    public String homeAdmin2(@PathVariable("id") Integer id, Model model , RedirectAttributes redirectAttributes){
+        try {
+            User userConnect = userRepository.getById(id);
+            model.addAttribute("user", userConnect);
+            model.addAttribute("pageTitle", "Bienvenu : "+userConnect.getFirstName());
+            return "admin_home";
+        }catch (UserNotFoundException exception) {
+            redirectAttributes.addFlashAttribute("message", "User pas touvé");
+            return "redirect:/";
+        }
+    }**/
+
+
+    @GetMapping("/member/member_home")
+    public String homeMember(){
+        return "member_home";
+    }
+
+    @GetMapping("/admin/list_users")
     public String showListUsers(Model model){
         List<User> listUsers = (List<User>) userRepository.findAll();
         model.addAttribute("listUsers", listUsers);
