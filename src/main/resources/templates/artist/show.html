@@ -2,7 +2,7 @@
 <html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
       layout:decorate="~{layouts/main}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Liste des artistes</title>
+    <title>Fiche d'un artiste</title>
 </head>
 <body>
 <div class="container">
@@ -13,8 +13,9 @@
         <ul th:unless="${#lists.isEmpty(artist.types)}">
             <li th:each="type : ${artist.types}" th:text="${type.type}">Type</li>
         </ul>
-
-
+        <div class="actions">
+            <a th:href="@{/artists/{id}/edit(id=${artist.id})}">Edit</a>
+        </div>
         <nav><a th:href="@{/artists}">Retour à l'index</a></nav>
     </div>
 </div>
