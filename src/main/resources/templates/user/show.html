@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Fiche d'un user</title>
+</head>
+<body>
+<div class="container">
+  <div layout:fragment="content">
+    <h1 th:text="${user.firstname} + ' ' + ${user.lastname}">Bob Sull</h1>
+    <ul>
+      <li>ID: <span th:text="${user.id}">ID</span></li>
+      <li>Login: <span th:text="${user.username}">Login</span></li>
+      <li>First Name: <span th:text="${user.firstname}">First Name</span></li>
+      <li>Last Name: <span th:text="${user.lastname}">Last Name</span></li>
+      <li>Email: <span th:text="${user.email}">Email</span></li>
+      <li>Language: <span th:text="${user.language}">Language</span></li>
+    </ul>
+    <div class="actions">
+      <a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a>
+      <form th:id="|deleteForm-${user.id}|"
+            th:action="@{/users/{id}(id=${user.id})}" th:method="delete">
+        <a href="#" th:onclick="|if(confirm('Confirm delete user #${user.id}'))
+                 		document.getElementById('deleteForm-${user.id}').submit();
+                 		return false;|">Delete</a>
+      </form>
+    </div>
+    <nav><a th:href="@{/users}">Retour à l'index</a></nav>
+  </div>
+</div>
+</body>
+</html>
