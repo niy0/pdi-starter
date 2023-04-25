@@ -1,5 +1,8 @@
 package com.pidSpringBoot.pidSpringBoot.user;
 
+import com.pidSpringBoot.pidSpringBoot.location.Location;
+import com.pidSpringBoot.pidSpringBoot.location.LocationService;
+import com.pidSpringBoot.pidSpringBoot.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +21,32 @@ public class UserController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private LocationService service;
+
+    //pour l'admin
+    @PostMapping("/admin/users/save")
+    public String saveUser(User user, Model model) {
+        customUserDetailsService.save(user);
+        model.addAttribute("message", user.getRoles());
+        return "redirect:/admin/list_users";
+    }
+
+
+
     @GetMapping("/admin/admin_home")
     public String homeAdmin(){
         return "admin_home";
     }
 
+    @GetMapping("/admin/edit/{id}")
+    public String adminEditUser(@PathVariable("id") Integer id, Model model){
+        User userToEdit = userRepository.getById(id);
+        List<Role> roleList = customUserDetailsService.listRoles();
+        model.addAttribute("userToEdit", userToEdit);
+        model.addAttribute("listRoles", roleList);
+        return "admin_edit_user";
+    }
     /**
     @GetMapping("/admin/admin_home/{id}")
     public String homeAdmin2(@PathVariable("id") Integer id, Model model , RedirectAttributes redirectAttributes){

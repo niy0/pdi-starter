@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin edit user</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div>
+  <div th:replace="fragments :: menu_admin"></div>
+  <div class="container-fluid text-center">
+    <h2>Modifier user</h2>
+    <div th:if="${message}" class="alert alert-danger text-center">
+      [[${message}]]
+    </div>
+    <form th:action="@{/admin/users/save}"  method="post" th:object="${userToEdit}" style="max-width: 700px; margin: 0 auto;">
+      <input type="hidden" th:field="*{id}">
+      <div class="border border-secondary rounded p-3">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Login :</label>
+          <div class="col-sm-8">
+            <input type="text" th:field="*{login}" readonly  class="form-control" required minlength="2" maxlength="30"/>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">First name:</label>
+          <div class="col-sm-8">
+            <input type="text" th:field="*{firstName}" readonly class="form-control" required minlength="2" maxlength="60" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Last name :</label>
+          <div class="col-sm-8">
+            <input type="text" th:field="*{lastName}" readonly class="form-control" required minlength="4" maxlength="60" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Email :</label>
+          <div class="col-sm-8">
+            <input type="email" th:field="*{email}" readonly class="form-control" required minlength="2" maxlength="100" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label">Roles :</label>
+          <div class="col-8">
+            <th:block th:each="role: ${listRoles}">
+              <input type="checkbox" th:field="*{roles}"
+                      th:text="${role.role}" th:value="${role.id}" class="m-2">
+            </th:block>
+          </div>
+        </div>
+        <div class="text-center ">
+          <button type="submit" class="btn btn-primary m-2">Save</button>
+          <button type="button" class="btn btn-secondary m2" onclick="cancelForm();">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script type="text/javascript">
+    function cancelForm(){
+        window.location = "[[@{/admin/list_users}]]";
+    }
+</script>
+</body>
+</html>

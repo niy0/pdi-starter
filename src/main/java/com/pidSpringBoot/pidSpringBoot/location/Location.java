@@ -1,6 +1,12 @@
 package com.pidSpringBoot.pidSpringBoot.location;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pidSpringBoot.pidSpringBoot.localitie.Localitie;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "locations")
@@ -26,6 +32,23 @@ public class Location {
 
     @Column(nullable = false,length = 30)
     private String phone;
+
+    /**
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "localitie_id",nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Localitie localitie;
+
+    public Location(){}
+    public Location( String slug, String designation, String address, Integer locality_id, String website, String phone, Localitie localitie) {
+        this.slug = slug;
+        this.designation = designation;
+        this.address = address;
+        this.locality_id = this.localitie.getId();
+        this.website = website;
+        this.phone = phone;
+    }**/
 
     public Integer getId() {
         return id;

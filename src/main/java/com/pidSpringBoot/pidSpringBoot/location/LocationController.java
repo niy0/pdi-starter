@@ -29,11 +29,11 @@ public class LocationController {
         return "location_form";
     }
 
-    @PostMapping("/locations/save")
+    @PostMapping("/admin/locations/save")
     public String saveLocation(Location location, RedirectAttributes redirectAttributes){
         service.save(location);
-        redirectAttributes.addFlashAttribute("message", "Location rajouté");
-        return "redirect:/locations";
+        redirectAttributes.addFlashAttribute("message", "Location modifier !");
+        return "redirect:/admin/locations";
     }
 
     @GetMapping("/locations/edit/{id}")

@@ -1,6 +1,9 @@
 package com.pidSpringBoot.pidSpringBoot.localitie;
 
+import com.pidSpringBoot.pidSpringBoot.location.Location;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "localities")
@@ -15,6 +18,11 @@ public class Localitie {
     @Column(nullable = false,length = 60)
     private String locality;
 
+
+    //Ajouter
+    @OneToMany(targetEntity = Location.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "locality_id", referencedColumnName = "id")
+    private List<Location> locations;
 
     public Integer getId() {
         return id;
