@@ -102,5 +102,20 @@ public class ArtistController {
     }
 
 
+    @DeleteMapping("/artists/{id}")
+    public String delete(@PathVariable("id") String id, Model model) {
+        Artist existing = service.getArtist(id);
+
+        if(existing!=null) {
+            Long indice = (long) Integer.parseInt(id);
+
+            service.deleteArtist(String.valueOf(indice));
+        }
+
+        return "redirect:/artists";
+    }
+
+
+
 
 }
