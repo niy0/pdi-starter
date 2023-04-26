@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des users</title>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <h1 th:text="${title}">Liste des users</h1>
+
+        <div class="actions">
+            <a th:href="@{/users/create}">Add new user</a>
+        </div>
+
+        <table th:unless="${#lists.isEmpty(users)}">
+            <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th colspan="3">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.firstname}">Bob</td>
+                <td th:text="${user.lastname}">Sull</td>
+                <td><a th:href="@{/users/{id}(id=${user.id})}">View</a></td>
+                <td><a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a></td>
+                <td>
+                    <form th:id="|deleteForm-${user.id}|"
+                          th:action="@{/users/{id}(id=${user.id})}" th:method="delete">
+                        <a href="#"
+                           th:onclick="|if(confirm('Confirm delete user #${user.id}'))
+	                    		document.getElementById('deleteForm-${user.id}').submit();
+	                    		return false;|">Delete</a>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
