@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
       layout:decorate="~{layouts/main}" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Fiche d'un user</title>
+  <title>Fiche d'un utilisateur</title>
 </head>
 <body>
 <div class="container">
   <div layout:fragment="content">
-    <h1 th:text="${user.firstname} + ' ' + ${user.lastname}">Bob Sull</h1>
-    <ul>
-      <li>ID: <span th:text="${user.id}">ID</span></li>
-      <li>Login: <span th:text="${user.username}">Login</span></li>
-      <li>First Name: <span th:text="${user.firstname}">First Name</span></li>
-      <li>Last Name: <span th:text="${user.lastname}">Last Name</span></li>
-      <li>Email: <span th:text="${user.email}">Email</span></li>
-      <li>Language: <span th:text="${user.language}">Language</span></li>
-    </ul>
+    <h1 th:text="${user.firstname} +' '+ ${user.lastname}">Bob Sull</h1>
+
+    <h2>Informations</h2>
+    <p><strong>Username:</strong> <span th:text="${user.login}">bob.sull</span></p>
+    <p><strong>Prenom:</strong> <span th:text="${user.firstname}">Bob</span></p>
+    <p><strong>Nom:</strong> <span th:text="${user.lastname}">Sull</span></p>
+    <p><strong>Email:</strong> <span th:text="${user.email}">John@gmail.com</span></p>
+    <p><strong>Language:</strong> <span th:text="${user.langue}">FR</span></p>
+
     <div class="actions">
-      <a th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a>
+      <a th:href="@{/users/{id}/edit(id=${user.id})}">Modifier</a>
       <form th:id="|deleteForm-${user.id}|"
             th:action="@{/users/{id}(id=${user.id})}" th:method="delete">
-        <a href="#" th:onclick="|if(confirm('Confirm delete user #${user.id}'))
+        <a href="#" th:onclick="|if(confirm('Confirmer la suppression de l'utilisateur #${user.id}'))
                  		document.getElementById('deleteForm-${user.id}').submit();
-                 		return false;|">Delete</a>
+                 		return false;|">Supprimer</a>
       </form>
     </div>
     <nav><a th:href="@{/users}">Retour à l'index</a></nav>
