@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <title>Creation d'un spectacle</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <style>
+        .fieldError { color: red; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <h1>Nouveau spectacle</h1>
+
+        <form th:action="@{/shows/create}" th:object="${show}" method="post">
+            <div class="form-group">
+                <label>Titre :</label>
+                <input type="text" class="form-control" th:field="*{title}">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
+            </div>
+            <div class="form-group">
+                <label>Description :</label>
+                <input type="text" class="form-control" th:field="*{description}">
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="fieldError"></p>
+            </div>
+            <div class="form-group">
+                <label>Image :</label>
+                <input type="text" class="form-control" th:field="*{posterUrl}">
+                <p th:if="${#fields.hasErrors('posterUrl')}" th:errors="*{posterUrl}" class="fieldError"></p>
+            </div>
+            <div class="form-group">
+                <label>Prix :</label>
+                <input type="text" class="form-control" th:field="*{price}" th:value="${show.price}">
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError"></p>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+
+            </div>
+        </form>
+
+        <nav><a th:href="@{/shows}">Retour</a></nav>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Bienvenue dans le projet pid 2022-2023</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-l3cH4i4vQ09kzxdyxyxQ2Nbx1NzvZPXjqN9sBrXU/HTiDm/6YYwug6kATx6thz/SfYVlI1ODuZ7V9X2mbE2C1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+<header th:fragment="header">
+  <div class="container">
+    <div th:fragment="menu" th:if="${!isAdmin && !isMember}">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">Projet Réservation</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/}">Catalogue Spectacles</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <div class="input-group">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary mr-3" type="submit">Search</button>
+              </div>
+            </div>
+          </form>
+          <div >
+            <a class="btn btn-outline-primary mr-3" th:href="@{/login}">Login</a>
+            <a class="btn btn-outline-primary " th:href="@{/signup}">S'inscrire</a>
+          </div>
+
+        </div>
+      </nav>
+    </div>
+    <div th:fragment="menu_admin" th:if="${isAdmin} ">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse"  style="justify-content:space-around;">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/admin_home}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/admin_home}">Catalogue Spectacles</a>
+            </li>
+            <form class="form-inline my-2 my-lg-0">
+              <div class="input-group">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </div>
+              </div>
+            </form>
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/admin/admin_home}">Réserver places</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/member_home}">Profile</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" th:href="@{/admin/locations}" id="navbarDropdownMenuLink" role="button"
+                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Locations</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" th:href="@{/admin/locations/new}">Add New Location</a></li>
+                <li> <a class="dropdown-item" href="#">Add New Location</a></li>
+              </ul>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/admin/list_users}">All users</a>
+            </li>
+          </ul>
+          <div style="display:flex;">
+            <form th:action="@{/logout}" >
+              <input class="btn btn-outline-warning" type="submit" value="LogOut">
+            </form>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div th:fragment="menu_member" th:if="${isMember}">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse"  style="justify-content:space-around;">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/member_home}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/member_home}">Catalogue Spectacles</a>
+            </li>
+            <form class="form-inline my-2 my-lg-0">
+              <div class="input-group">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </div>
+              </div>
+            </form>
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/member_home}">Réserver places</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" th:href="@{/profile}">Profile</a>
+            </li>
+          </ul>
+          <div style="display:flex;">
+            <form th:action="@{/logout}" >
+              <input class="btn btn-outline-warning" type="submit" value="LogOut">
+            </form>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    </div>
+  </nav>
+</div>
+</header>
+<script src="https://codes.jquery.com/jquery-3.2.1.sli.min.js" integrity="" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" >
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription reussie</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+div class="container">
+<div layout:fragment="content">
+    <h3>Inscription enregistré</h3>
+    <a class="btn btn-outline-success" th:href="@{/login}">Login</a>
+      <div>[[${user.firstName}]]</div>
+  </div>
+</body>
+</html>

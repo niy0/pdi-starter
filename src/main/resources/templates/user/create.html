@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Création d'un user</title>
+    <style>
+.fieldError { color: red; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <h1>New User</h1>
+
+        <form th:action="@{/users/create}" th:object="${user}" method="post">
+
+            <div>
+                <label>Username:</label>
+                <input type="text" th:field="*{login}">
+                <p th:if="${#fields.hasErrors('login')}"
+                   th:errors="*{login}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <label>Firstname:</label>
+                <input type="text" th:field="*{firstname}">
+                <p th:if="${#fields.hasErrors('firstname')}"
+                   th:errors="*{firstname}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <label>Lastname:</label>
+                <input type="text" th:field="*{lastname}">
+                <p th:if="${#fields.hasErrors('lastname')}"
+                   th:errors="*{lastname}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <label>Email::</label>
+                <input type="text" th:field="*{email}">
+                <p th:if="${#fields.hasErrors('email')}"
+                   th:errors="*{email}" th:errorclass="fieldError"></p>
+            </div>
+            <div>
+                <button type="submit" th:text="Modifier">Modifier</button>
+                <button type="reset" th:text="Réinitialiser">Réinitialiser</button>
+                <a th:href="@{/users}">Annuler</a>
+            </div>
+        </form>
+
+        <nav><a th:href="@{/users}">Retour à l'index</a></nav>
+    </div>
+</div>
+</body>
+</html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Bienvenue dans le page Admin</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -20,6 +20,8 @@
     <div layout:fragment="content">
         <h1 th:text="${title}">Liste des spectacles</h1>
 
+        <a class="btn btn-primary mb-3" th:href="@{/shows/create}">Ajouter spectacle</a>
+
         <table id="catalogue" class="display" style="width:100%">
             <thead>
             <tr>
@@ -28,6 +30,7 @@
                 <th>Lieu</th>
                 <th>Prix</th>
                 <th>Reservable</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -49,8 +52,15 @@
                 <td th:if="${show.bookable}"><p><em>oui</em></p>
                     <p th:unless="${show.bookable}"><em>non</em></p>
                 </td>
+                <td>
+                    <a class="btn btn-info btn-sm" th:href="@{/shows/} + ${show.id}">Read</a>
+                    <a class="btn btn-warning btn-sm" th:href="@{/shows/edit/} + ${show.id}">Edit</a>
+                    <form th:action="@{/shows/{id}}" th:method="delete">
+                        <input type="hidden" name="id" th:value="${show.id}" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
             </tr>
-
             </tbody>
             <tfoot>
             </tfoot>
@@ -58,7 +68,9 @@
     </div>
 </div>
 
+</div>
 
-    </div>
+<span sec:authentication="principal.authorities"></span>
+</div>
 </body>
 </html>

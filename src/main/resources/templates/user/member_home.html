@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenue dans le page Membre</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${user.firstName} +' '+ ${user.lastName}">Bob Sull</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Informations</h6>
+                <p class="card-text"><strong>Username:</strong> <span th:text="${user.login}">bob.sull</span></p>
+                <p class="card-text"><strong>Prenom:</strong> <span th:text="${user.firstName}">Bob</span></p>
+                <p class="card-text"><strong>Nom:</strong> <span th:text="${user.lastName}">Sull</span></p>
+                <p class="card-text"><strong>Email:</strong> <span th:text="${user.email}">John@gmail.com</span></p>
+                <p class="card-text"><strong>Language:</strong> <span th:text="${user.langue}">FR</span></p>
+            </div>
+        </div>
+        <<!--div class="actions">
+            <a th:href="@{/users/edit/} + {user.id}">Modifier</a>
+            <form th:id="|deleteForm-${user.id}|"
+                  th:action="@{/users/edit/} + {user.id}" th:method="delete">\z
+                <a href="#" th:onclick="|if(confirm('Confirmer la suppression de l'utilisateur #${user.id}'))
+                 		document.getElementById('deleteForm-${user.id}').submit();
+                 		return false;|">Supprimer</a>
+            </form
+        </div>-->
+        <nav><a th:href="@{/users}">Retour à l'index</a></nav>
+    </div>
+</div>
+</body>
+</html>
