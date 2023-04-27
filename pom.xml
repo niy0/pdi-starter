@@ -108,7 +108,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<build>
+		
     <resources>
         <resource>
             <directory>src/main/resources</directory>
@@ -123,6 +123,6 @@
             </includes>
         </resource>
     </resources>
-</build>
+
 
 </project>
