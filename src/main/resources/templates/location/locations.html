@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+  <meta charset="UTF-8">
+  <title>Locations</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container">
+  <div layout:fragment="content">
+      <div class="m-2">
+        <h2>Liste des locations</h2>
+      </div>
+      <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+      </div>
+      <div>
+        <table class="table table-hover">
+          <thead class="table-success">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Slug</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Address</th>
+              <th scope="col">Website</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <th:block th:each="location : ${listLocations}">
+              <tr>
+                <th scope="row">[[${location.id}]]</th>
+                <td>[[${location.slug}]]</td>
+                <td>[[${location.designation}]]</td>
+                <td>[[${location.address}]]</td>
+                <td>[[${location.website}]]</td>
+                <td>[[${location.phone}]]</td>
+
+                <td>
+                  <a class="btn btn-outline-warning"  th:href="@{'/locations/edit/' +  ${location.id}}">Edit</a>
+                  <a class="btn btn-outline-danger"  th:href="@{'/locations/delete/' +  ${location.id}}">Delete</a>
+                </td>
+              </tr>
+            </th:block>
+          </tbody>
+        </table>
+        <div><a class="btn btn-outline-success" th:href="@{/admin/locations/new}">Add New Location</a></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

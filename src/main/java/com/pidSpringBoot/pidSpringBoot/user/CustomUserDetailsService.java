@@ -3,8 +3,6 @@ package com.pidSpringBoot.pidSpringBoot.user;
 import com.pidSpringBoot.pidSpringBoot.role.Role;
 import com.pidSpringBoot.pidSpringBoot.role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,8 +35,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public void registerDefaultUser(User user){
-        Optional<Role> test = roleRepository.findById(1);
-        user.addRoles(test.get());
+        Optional<Role> test = roleRepository.findById(2);
+        user.addRole(test.get());
         userRepository.save(user);
     }
 

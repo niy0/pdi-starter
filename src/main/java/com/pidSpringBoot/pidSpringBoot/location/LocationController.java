@@ -1,12 +1,9 @@
 package com.pidSpringBoot.pidSpringBoot.location;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -19,19 +16,22 @@ public class LocationController {
     public String showLocationList(Model model){
         List<Location> listLocations = service.listAll();
         model.addAttribute("listLocations", listLocations);
-        return "locations";
+        model.addAttribute("isAdmin", true);
+        return "/location/locations";
     }
 
     @GetMapping("/admin/locations/new")
     public String showNewForm(Model model){
         model.addAttribute("location", new Location());
         model.addAttribute("pageTitle", "Add new location");
-        return "location_form";
+        model.addAttribute("isAdmin", true);
+        return "location/location_form";
     }
 
     @PostMapping("/admin/locations/save")
-    public String saveLocation(Location location, RedirectAttributes redirectAttributes){
+    public String saveLocation(Model model,Location location, RedirectAttributes redirectAttributes){
         service.save(location);
+        model.addAttribute("isAdmin", true);
         redirectAttributes.addFlashAttribute("message", "Location modifier !");
         return "redirect:/admin/locations";
     }
@@ -40,23 +40,27 @@ public class LocationController {
     public String showEditLocation(@PathVariable("id") Integer id, Model model , RedirectAttributes redirectAttributes){
         try {
             Location location = service.get(id);
+            model.addAttribute("isAdmin", true);
             model.addAttribute("location", location);
+            model.addAttribute("location id", location.getLocality().getId());
             model.addAttribute("pageTitle", "Edit location (ID: "+id+")");
-            return "location_form";
+            return "location/location_form";
         } catch (LocationNotFoundException e) {
             redirectAttributes.addFlashAttribute("message", "Location rajouté");
-            return "redirect:/locations";
+            model.addAttribute("isAdmin", true);
+            return "redirect:/admin/locations";
         }
     }
 
-    @GetMapping("/locations/delete/{id}")
-    public String deleteLocation(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+    @DeleteMapping("/locations/delete/{id}")
+    public String deleteLocation(Model model,@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
         try {
             service.delete(id);
             redirectAttributes.addFlashAttribute("message", "Location avec cette ID: ("+ id +") a été supprimé.");
         } catch (LocationNotFoundException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/locations";
+        model.addAttribute("isAdmin", true);
+        return "redirect:/admin/locations";
     }
 }
