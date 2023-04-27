@@ -1,54 +1,56 @@
 package com.pidSpringBoot.pidSpringBoot.location;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pidSpringBoot.pidSpringBoot.localitie.Localitie;
+import com.github.slugify.Slugify;
+import com.pidSpringBoot.pidSpringBoot.Representation.Representation;
+import com.pidSpringBoot.pidSpringBoot.locality.Locality;
+import com.pidSpringBoot.pidSpringBoot.show.Show;
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "locations")
 public class Location {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = true,length = 60)
+
+    @Column(unique = true)
     private String slug;
 
-    @Column(nullable = false,length = 60)
+
     private String designation;
 
-    @Column(nullable = false,length = 60)
+
     private String address;
 
-    @Column(nullable = false,length = 11)
-    private Integer locality_id;
-
-    @Column(nullable = true,length = 255)
     private String website;
 
-    @Column(nullable = false,length = 30)
+
     private String phone;
 
-    /**
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "localitie_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Localitie localitie;
+    @OneToMany(targetEntity=Show.class, mappedBy="location")
+    private List<Show> shows = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "locality_id", nullable = false)
+    private Locality locality;
+    @OneToMany(targetEntity= Representation.class, mappedBy="location")
+    private List<Representation> representations = new ArrayList<>();
+
+
 
     public Location(){}
-    public Location( String slug, String designation, String address, Integer locality_id, String website, String phone, Localitie localitie) {
-        this.slug = slug;
+    public Location(String slug, String designation, String address, Locality locality, String website, String phone) {
+        Slugify slg = new Slugify();
+        this.slug = slg.slugify(designation);
         this.designation = designation;
         this.address = address;
-        this.locality_id = this.localitie.getId();
+        this.locality = locality;
         this.website = website;
         this.phone = phone;
-    }**/
+    }
 
     public Integer getId() {
         return id;
@@ -82,14 +84,6 @@ public class Location {
         this.address = address;
     }
 
-    public Integer getLocality_id() {
-        return locality_id;
-    }
-
-    public void setLocality_id(Integer locality_id) {
-        this.locality_id = locality_id;
-    }
-
     public String getWebsite() {
         return website;
     }
@@ -105,7 +99,34 @@ public class Location {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    public Locality getLocality() {
+        return locality;
+    }
 
+    public void setLocality(Locality locality) {
+        this.locality.removeLocation(this);	//déménager de l’ancienne localité
+        this.locality = locality;
+        this.locality.addLocation(this);		//emménager dans la nouvelle localité
+    }
+    public Location addShow(Show show) {
+        if(!this.shows.contains(show)) {
+            this.shows.add(show);
+            show.setLocation(this);
+        }
+
+        return this;
+    }
+
+    public Location removeShow(Show show) {
+        if(this.shows.contains(show)) {
+            this.shows.remove(show);
+            if(show.getLocation().equals(this)) {
+                show.setLocation(null);
+            }
+        }
+
+        return this;
+    }
     @Override
     public String toString() {
         return "Location{" +
@@ -113,7 +134,7 @@ public class Location {
                 ", slug='" + slug + '\'' +
                 ", designation='" + designation + '\'' +
                 ", address='" + address + '\'' +
-                ", locality_id=" + locality_id +
+                ", locality=" + locality +
                 ", website='" + website + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';

@@ -1,44 +1,41 @@
 package com.pidSpringBoot.pidSpringBoot.user;
 
+import com.pidSpringBoot.pidSpringBoot.Representation.Representation;
 import com.pidSpringBoot.pidSpringBoot.role.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(nullable = false,length = 30,unique = true)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int id;
     private String login;
-
-    @Column(nullable = false,length = 255)
     private String password;
-
-    @Column(nullable = false,length = 60)
+    @NotEmpty(message = "The firstname must not be empty.")
+    @Size(min=2, max=60, message = "The firstname must be between 2 and 60 characters long.")
+    @Column(name = "firstname")
     private String firstName;
-
-    @Column(nullable = false,length = 60)
+    @NotEmpty(message = "The lastname must not be empty.")
+    @Size(min=1, max=60, message = "The lastname must be between 2 and 60 characters long.")
+    @Column(name = "lastname")
     private String lastName;
-
-    @Column(nullable = false,length = 100)
+    @NotEmpty(message = "The firstname must not be empty.")
+    @Size(min=2, max=60, message = "The firstname must be between 2 and 60 characters long.")
     private String email;
-
-    @Column(nullable = false)
     private String langue;
+    private LocalDateTime created_at;
+    @ManyToMany(mappedBy = "users")
+    private List<Representation> representations = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    @ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
+
     private Set<Role> roles = new HashSet<>();
 
     public String allRolesUser(){
@@ -49,6 +46,10 @@ public class User {
 
     public User() {}
 
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
     public User(String login, String password, String firstName, String lastName, String email, String langue) {
         this.login = login;
         this.password = password;
@@ -56,6 +57,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.langue = langue;
+        this.created_at = LocalDateTime.now();
     }
 
     public Integer getId() {
@@ -120,8 +122,13 @@ public class User {
         }
         return false;
     }
-    public void addRoles(Role roles) {
-        this.roles.add(roles);
+    public User addRole(Role role) {
+        if(!this.roles.contains(role)) {
+            this.roles.add(role);
+            role.addUser(this);
+        }
+
+        return this;
     }
 
     public String getLangue() {
@@ -132,8 +139,26 @@ public class User {
         this.langue = langue.name();
     }
 
+    public List<Representation> getRepresentations() {
+        return representations;
+    }
+    public User addRepresentation(Representation representation) {
+        if(!this.representations.contains(representation)) {
+            this.representations.add(representation);
+            representation.addUser(this);
+        }
 
+        return this;
+    }
 
+    public User removeRepresentation(Representation representation) {
+        if(this.representations.contains(representation)) {
+            this.representations.remove(representation);
+            representation.getUsers().remove(this);
+        }
+
+        return this;
+    }
 
     @Override
     public String toString() {

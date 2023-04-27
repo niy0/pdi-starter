@@ -60,8 +60,8 @@ public class WebSecurityConfig {
         httpSecurity.authenticationProvider(authenticationProvider());
         httpSecurity.authorizeRequests().
                 requestMatchers("/","/signup").permitAll()
-                .requestMatchers("/admin**").hasAuthority("Admin")
-                .requestMatchers("/member**").hasAuthority("Member")
+                .requestMatchers("/admin**").hasAuthority("admin")
+                .requestMatchers("/member**").hasAuthority("member")
                 //.requestMatchers("/member/**").hasAnyAuthority("Member","Admin")
                 .and()
                 .formLogin()
