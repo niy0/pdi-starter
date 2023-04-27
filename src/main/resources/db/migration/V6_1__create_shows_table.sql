@@ -12,8 +12,6 @@ CREATE TABLE `shows` (
   PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET= utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-ALTER TABLE shows
-    ALTER COLUMN created_at SET DEFAULT NOW();
 --
 -- Index pour la table `shows`
 --
