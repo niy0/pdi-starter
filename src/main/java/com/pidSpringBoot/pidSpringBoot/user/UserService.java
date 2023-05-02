@@ -20,6 +20,15 @@ public class UserService {
         return users;
     }
 
+    public User findByLogin(String login){
+        for (User user:repository.findAll()) {
+            if(user.getLogin().equals(login)){
+                return user;
+            }
+        }
+        return null;
+
+    }
     public Optional<User> getUser(String id) {
         int indice = Integer.parseInt(id);
 
