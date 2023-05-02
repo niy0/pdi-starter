@@ -20,15 +20,7 @@
                 <p class="card-text"><strong>Language:</strong> <span th:text="${user.langue}">FR</span></p>
             </div>
         </div>
-        <<!--div class="actions">
-            <a th:href="@{/users/edit/} + {user.id}">Modifier</a>
-            <form th:id="|deleteForm-${user.id}|"
-                  th:action="@{/users/edit/} + {user.id}" th:method="delete">\z
-                <a href="#" th:onclick="|if(confirm('Confirmer la suppression de l'utilisateur #${user.id}'))
-                 		document.getElementById('deleteForm-${user.id}').submit();
-                 		return false;|">Supprimer</a>
-            </form
-        </div>-->
+
         <nav><a th:href="@{/users}">Retour à l'index</a></nav>
     </div>
 </div>

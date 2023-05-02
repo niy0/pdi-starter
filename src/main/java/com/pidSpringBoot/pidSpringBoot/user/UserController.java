@@ -86,7 +86,7 @@ public class UserController {
         model.addAttribute("user",user);
         model.addAttribute("isMember", true);
         model.addAttribute("isAdmin", false);
-        return "user/member_home";
+        return "/user/member_home";
     }
 
     @GetMapping("/admin/list_users")
@@ -101,13 +101,14 @@ public class UserController {
 
     @PostMapping("/process_signup")
     public String processRegistration(User user, RedirectAttributes redirectAttributes,Model model) {
-        User userTest = userRepository.findByLogin(user.getLogin());
+        User userTest = userService.findByLogin(user.getLogin());
         if (userTest != null) {
             //model.addAttribute("currentUser", user);
             redirectAttributes.addFlashAttribute("message", "Login existe déjà !");
             return "redirect:/signup";
         } else {
-            model.addAttribute("isAdmin", true);
+            model.addAttribute("isMember", true);
+            model.addAttribute("isAdmin", false);
             customUserDetailsService.setPasswordEncoder(user);//encoder le password
             customUserDetailsService.registerDefaultUser(user);//mettre par defaut role "Member"
             return "/user/signup_success";
