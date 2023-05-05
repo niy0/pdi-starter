@@ -3,36 +3,82 @@ package com.pidSpringBoot.pidSpringBoot.model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 public class RepresentationController {
-    @Autowired
-    RepresentationService service;
+        @Autowired
+        private RepresentationService representationService;
 
-    @GetMapping("/representations")
-    public String index(Model model) {
-        List<Representation> representations = service.getAll();
+       /* @Autowired
+        private ShowService showService;*/
 
-        model.addAttribute("representations", representations);
-        model.addAttribute("title", "Liste des representations");
+       /* @Autowired
+        private LocationService locationService;*/
 
-        return "representation/index";
+        // GET - récupérer toutes les représentations
+        @GetMapping("/representations")
+        public String getAllRepresentations(Model model) {
+            List<Representation> representations = representationService.findAll();
+            model.addAttribute("representations", representations);
+            return "representation/list";
+        }
+
+        // GET - récupérer une représentation par ID
+        @GetMapping("/representations/{id}")
+        public String getRepresentationById(@PathVariable Long id, Model model) {
+            Representation representation = representationService.findById(id);
+            model.addAttribute("representation", representation);
+            return "representation/view";
+        }
+
+        // GET - créer une nouvelle représentation
+        @GetMapping("/representations/new")
+        public String createRepresentation(Model model) {
+            Representation representation = new Representation();
+            //  List<Show> shows = showService.findAll();
+            //  List<Location> locations = locationService.findAll();
+            model.addAttribute("representation", representation);
+            //  model.addAttribute("shows", shows);
+            //  model.addAttribute("locations", locations);
+            return "representation/form";
+        }
+
+        // POST - sauvegarder une nouvelle représentation
+        @PostMapping("/representations")
+        public String saveRepresentation(@ModelAttribute("representation") Representation representation) {
+            representationService.save(representation);
+            return "redirect:/representations";
+        }
+
+        // GET - éditer une représentation existante
+        @GetMapping("/representations/edit/{id}")
+        public String editRepresentation(@PathVariable Long id, Model model) {
+            Representation representation = representationService.findById(id);
+            //   List<Show> shows = showService.findAll();
+            //  List<Location> locations = locationService.findAll();
+            model.addAttribute("representation", representation);
+            //   model.addAttribute("shows", shows);
+            //   model.addAttribute("locations", locations);
+            return "representation/form";
+        }
+
+        // PUT - mettre à jour une représentation existante
+        @PutMapping("/representations/{id}")
+        public String updateRepresentation(@PathVariable Long id, @ModelAttribute("representation") Representation representation) {
+            //  representation.setId(id);
+            // representationService.update(id,representation);
+            return "redirect:/representations";
+        }
+
+        // DELETE - supprimer une représentation existante
+        @DeleteMapping("/representations/{id}")
+        public String deleteRepresentation(@PathVariable Long id) {
+            representationService.delete(id);
+            return "redirect:/representations";
+        }
+
     }
 
-    @GetMapping("/representations/{id}")
-    public String show(Model model, @PathVariable("id") String id) {
-        Representation representation = service.get(id);
-
-        model.addAttribute("representation", representation);
-        model.addAttribute("date", representation.getWhen().toLocalDate());
-        model.addAttribute("heure", representation.getWhen().toLocalTime());
-        model.addAttribute("title", "Fiche d'une representation");
-
-        return "representation/show";
-    }
-
-}

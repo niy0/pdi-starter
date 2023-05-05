@@ -10,44 +10,30 @@ import java.util.Optional;
 @Service
 public class RepresentationService {
     @Autowired
-    private RepresentationRepository repository;
+    private RepresentationRepository representationRepository;
 
-
-    public List<Representation> getAll() {
-        List<Representation> representations = new ArrayList<>();
-
-        repository.findAll().forEach(representations::add);
-
-        return representations;
+    public List<Representation> findAll() {
+        return (List<Representation>) representationRepository.findAll();
     }
 
-    public Representation get(String id) {
-        Long indice = (long) Integer.parseInt(id);
-        Optional<Representation> representation = repository.findById(indice);
-
-        return representation.isPresent() ? representation.get() : null;
+    public Representation findById(Long id) {
+        Optional<Representation> optionalRepresentation = representationRepository.findById(id);
+        return optionalRepresentation.orElseThrow(() -> new RuntimeException("Representation introuvable"));
     }
 
-    public void add(Representation representation) {
-        repository.save(representation);
+    public Representation save(Representation representation) {
+        return representationRepository.save(representation);
     }
 
-    public void update(String id, Representation representation) {
-        repository.save(representation);
-    }
-
-    public void delete(String id) {
-        Long indice = (long) Integer.parseInt(id);
-
-        repository.deleteById(indice);
-    }
-
-  /* public List<Representation> getFromLocation(Location location) {
-        return repository.findByLocation(location);
+   /* public Representation update(Long id, Representation representation) {
+        Representation representationToUpdate = findById(id);
+        representationToUpdate.setShow(representation.getShow());
+        representationToUpdate.setLocation(representation.getLocation());
+        return representationRepository.save(representationToUpdate);
     }*/
 
-   /* public List<Representation> getFromShow(Show show) {
-        return repository.findByShow(show);
-    }*/
-
+    public void delete(Long id) {
+        Representation representationToDelete = findById(id);
+        representationRepository.delete(representationToDelete);
+    }
 }

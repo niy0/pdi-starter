@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<HEAD>
+  <title>Liste des représentations de spectacle</title>
+</head>
+<body>
+<div class="container">
+  <div layout:fragment="content">
+    <h1 >Liste des représentations de spectacle</h1>
+    <p><a th:href="@{/representations/new}" class="btn btn-primary">Créer une nouvelle représentation</a></p>
+
+
+    <ul th:unless="${#lists.isEmpty(representations)}">
+      <li th:each="representation : ${representations}">
+        <span th:text="${representation.show.title}">Ayiti</span>
+        <span th:if="${representation.location}"
+              th:text="' - '+${representation.location.designation}">- Art Center</span>
+        <span th:text="${#temporals.format(representation.when,'dd-MM-yyyy')}">
+			12-10-2012</span>
+        <span th:text="${#temporals.format(representation.when,'HH:mm')}">
+			13:30</span>
+        </br>
+        <a th:href="@{/representations/{id}(id=${representation.id})}" class="btn btn-success">Voir</a> |
+        <a th:href="@{/representations/edit/{id}(id=${representation.id})}" class="btn btn-warning"  >Editer</a> |
+        <td><a href="" th:href="@{/representations/{id}(id=${representation.id})}" class="btn btn-danger">Delete</a></td>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

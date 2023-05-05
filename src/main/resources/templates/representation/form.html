@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire représentation</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h1>Formulaire représentation</h1>
+    <form th:action="@{/representations}" method="post" th:object="${representation}">
+        <input type="hidden" th:if="${representation.id}" th:field="*{id}" />
+        <label for="showId">Show ID:</label>
+        <select id="showId" name="showId" th:field="*{show.id}">
+            <option th:each="show : ${shows}" th:value="${show.id}" th:text="${show.title}"></option>
+        </select>
+        <br />
+        <label for="locationId">Location ID:</label>
+        <select id="locationId" name="locationId" th:field="*{location.id}">
+            <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.designation}"></option>
+        </select>
+        <br />
+        <label for="when">Date</label>
+        <input type="date" id="when" name="when">
+        <input type="time" id="appt" name="appt">
+        </br>
+        <button type="submit">Sauvegarder</button>
+        <button type="button" onclick="window.location.href='@{/representations}'">Annuler</button>
+    </form>
+</div>
+</body>
+</html>
