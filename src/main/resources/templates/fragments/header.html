@@ -27,12 +27,12 @@
               <a class="nav-link" th:href="@{/}">Catalogue Spectacles</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
+          <form action="#" th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0">
             <div class="input-group">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-outline-primary mr-3" type="submit">Search</button>
-              </div>
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" th:name="keyword" aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary mr-3" type="submit">Search</button>
+                </div>
             </div>
           </form>
           <div >
@@ -53,14 +53,14 @@
             <li class="nav-item active">
               <a class="nav-link" th:href="@{/admin/admin_home}">Catalogue Spectacles</a>
             </li>
-            <form class="form-inline my-2 my-lg-0">
-              <div class="input-group">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="#" th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0">
+            <div class="input-group">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" th:name="keyword" aria-label="Search">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  <button class="btn btn-outline-primary mr-3" type="submit">Search</button>
                 </div>
-              </div>
-            </form>
+            </div>
+          </form>
             <li class="nav-item active">
               <a class="nav-link" th:href="@{/admin/admin_home}">Réserver places</a>
             </li>
@@ -97,14 +97,14 @@
             <li class="nav-item active">
               <a class="nav-link" th:href="@{/user/member_home}">Catalogue Spectacles</a>
             </li>
-            <form class="form-inline my-2 my-lg-0">
-              <div class="input-group">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="#" th:action="@{/search}" method="get" class="form-inline my-2 my-lg-0">
+            <div class="input-group">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" th:name="keyword" aria-label="Search">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  <button class="btn btn-outline-primary mr-3" type="submit">Search</button>
                 </div>
-              </div>
-            </form>
+            </div>
+          </form>
             <li class="nav-item active">
               <a class="nav-link" th:href="@{/member_home}">Réserver places</a>
             </li>
