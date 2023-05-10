@@ -95,7 +95,7 @@ public class UserController {
         List<User> listUsers = (List<User>) userRepository.findAll();
         model.addAttribute("isAdmin", true);
         model.addAttribute("listUsers", listUsers);
-        return "/admin/list_users";
+        return "admin/list_users";
     }
 
 
@@ -111,7 +111,7 @@ public class UserController {
             model.addAttribute("isAdmin", false);
             customUserDetailsService.setPasswordEncoder(user);//encoder le password
             customUserDetailsService.registerDefaultUser(user);//mettre par defaut role "Member"
-            return "/user/signup_success";
+            return "user/signup_success";
         }
     }
 
