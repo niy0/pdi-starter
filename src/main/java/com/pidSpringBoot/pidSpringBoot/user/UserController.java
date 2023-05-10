@@ -47,7 +47,7 @@ public class UserController {
 
 
 
-    @GetMapping("/admin_home")
+    @GetMapping("/admin/admin_home")
     public String homeAdmin(Model model){
         List<Show> shows = showService.getAll();
         model.addAttribute("isAdmin", true);
@@ -65,7 +65,7 @@ public class UserController {
         model.addAttribute("listRoles", roleList);
         return "admin/admin_edit_user";
     }
-    @GetMapping("/member_home")
+    @GetMapping("/user/member_home")
     public String homeMember(Model model){
         List<Show> shows = showService.getAll();
         model.addAttribute("isAdmin", false);
