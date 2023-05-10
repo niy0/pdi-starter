@@ -52,6 +52,9 @@ public class ShowService {
 
         repository.deleteById((long) Math.toIntExact(indice));
     }
+      public List<Show> search(String keyword) {
+        return showRepository.findByTitleContaining(keyword);
+    }
 
 }
 
