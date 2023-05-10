@@ -86,7 +86,7 @@ public class UserController {
         model.addAttribute("user",user);
         model.addAttribute("isMember", true);
         model.addAttribute("isAdmin", false);
-        return "/user/member_home";
+        return "user/member_home";
     }
 
     @GetMapping("/admin/list_users")
