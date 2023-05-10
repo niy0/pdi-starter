@@ -61,7 +61,7 @@ public class ShowController {
         model.addAttribute("shows", result);
         model.addAttribute("keyword", keyword);
 
-        return "search_results";
+        return "redirect:/shows/" + show.getId();
     }
     @GetMapping("/shows/create")
     public String create(Model model) {
