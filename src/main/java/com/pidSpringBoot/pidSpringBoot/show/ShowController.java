@@ -55,6 +55,14 @@ public class ShowController {
 
         return "show/show";
     }
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, Model model) {
+        List<Show> result = showService.search(keyword);
+        model.addAttribute("shows", result);
+        model.addAttribute("keyword", keyword);
+
+        return "search_results";
+    }
     @GetMapping("/shows/create")
     public String create(Model model) {
         Show show = new Show();
