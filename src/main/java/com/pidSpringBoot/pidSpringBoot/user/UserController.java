@@ -81,8 +81,8 @@ public class UserController {
     public String profile(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
-
         User user = userService.findUser(currentUser);
+        System.out.println("---------------------------User = " + currentUser);
         model.addAttribute("user",user);
         model.addAttribute("isMember", true);
         model.addAttribute("isAdmin", false);
