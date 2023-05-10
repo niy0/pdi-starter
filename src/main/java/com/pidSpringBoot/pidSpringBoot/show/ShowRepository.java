@@ -9,5 +9,6 @@ public interface ShowRepository extends CrudRepository<Show,Long> {
     Show findBySlug(String slug);
     Show findByTitle(String title);
     List<Show> findByLocation(Location location);
+   
 
 }

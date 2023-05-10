@@ -52,6 +52,6 @@ public class ShowService {
 
         repository.deleteById((long) Math.toIntExact(indice));
     }
-
+     
 }
 

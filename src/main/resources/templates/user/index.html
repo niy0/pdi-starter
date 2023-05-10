@@ -9,10 +9,14 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <script>
-            $(document).ready(function() {
-                $('#catalogue').DataTable();
-            });
-        </script>
+        $(document).ready(function() {
+            var table = $('#catalogue').DataTable();
+
+            $('#searchInput').on('keyup', function() {
+                  table.search(this.value).draw();
+             });
+        });
+   </script>
 </head>
 <body>
 
