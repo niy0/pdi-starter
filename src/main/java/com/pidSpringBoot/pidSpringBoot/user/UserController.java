@@ -82,7 +82,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
         User user = userService.findUser(currentUser);
-        System.out.println("---------------------------User = " + user.getFirstName());
+        System.out.println("---------------------------User = " + user);
         model.addAttribute("user",user);
         model.addAttribute("isMember", true);
         model.addAttribute("isAdmin", false);
