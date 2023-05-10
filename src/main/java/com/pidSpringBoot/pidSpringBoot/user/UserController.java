@@ -47,13 +47,13 @@ public class UserController {
 
 
 
-    @GetMapping("/admin_home")
+    @GetMapping("/admin/admin_home")
     public String homeAdmin(Model model){
         List<Show> shows = showService.getAll();
         model.addAttribute("isAdmin", true);
         model.addAttribute("shows",shows);
         model.addAttribute("title", "Liste des spectacles");
-        return "/admin/admin_home";
+        return "admin/admin_home";
     }
 
     @GetMapping("/admin/edit/{id}")
@@ -63,16 +63,16 @@ public class UserController {
         model.addAttribute("isAdmin", true);
         model.addAttribute("userToEdit", userToEdit);
         model.addAttribute("listRoles", roleList);
-        return "/admin/admin_edit_user";
+        return "admin/admin_edit_user";
     }
-    @GetMapping("/member_home")
+    @GetMapping("/user/member_home")
     public String homeMember(Model model){
         List<Show> shows = showService.getAll();
         model.addAttribute("isAdmin", false);
         model.addAttribute("isMember", true);
         model.addAttribute("shows",shows);
         model.addAttribute("title", "Liste des spectacles");
-        return "/user/index";
+        return "user/index";
     }
 
 
@@ -81,12 +81,12 @@ public class UserController {
     public String profile(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
-
         User user = userService.findUser(currentUser);
+        System.out.println("---------------------------User = " + user);
         model.addAttribute("user",user);
         model.addAttribute("isMember", true);
         model.addAttribute("isAdmin", false);
-        return "/user/member_home";
+        return "user/member_home";
     }
 
     @GetMapping("/admin/list_users")
@@ -95,7 +95,7 @@ public class UserController {
         List<User> listUsers = (List<User>) userRepository.findAll();
         model.addAttribute("isAdmin", true);
         model.addAttribute("listUsers", listUsers);
-        return "/admin/list_users";
+        return "admin/list_users";
     }
 
 
@@ -111,7 +111,7 @@ public class UserController {
             model.addAttribute("isAdmin", false);
             customUserDetailsService.setPasswordEncoder(user);//encoder le password
             customUserDetailsService.registerDefaultUser(user);//mettre par defaut role "Member"
-            return "/user/signup_success";
+            return "user/signup_success";
         }
     }
 

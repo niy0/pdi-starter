@@ -36,7 +36,7 @@ public class UserService {
     }
     public User findUser(String name){
         for (User user:repository.findAll()) {
-            if(user.getFirstName().equals(name)){
+            if(user.getLogin().equals(name)){
                 return user;
             }
         }
