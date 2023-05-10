@@ -53,7 +53,7 @@ public class UserController {
         model.addAttribute("isAdmin", true);
         model.addAttribute("shows",shows);
         model.addAttribute("title", "Liste des spectacles");
-        return "/admin/admin_home";
+        return "admin/admin_home";
     }
 
     @GetMapping("/admin/edit/{id}")
@@ -63,7 +63,7 @@ public class UserController {
         model.addAttribute("isAdmin", true);
         model.addAttribute("userToEdit", userToEdit);
         model.addAttribute("listRoles", roleList);
-        return "/admin/admin_edit_user";
+        return "admin/admin_edit_user";
     }
     @GetMapping("/member_home")
     public String homeMember(Model model){
@@ -72,7 +72,7 @@ public class UserController {
         model.addAttribute("isMember", true);
         model.addAttribute("shows",shows);
         model.addAttribute("title", "Liste des spectacles");
-        return "/user/index";
+        return "user/index";
     }
 
 
