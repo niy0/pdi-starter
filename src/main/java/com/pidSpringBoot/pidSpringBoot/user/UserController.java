@@ -44,7 +44,7 @@ public class UserController {
         model.addAttribute("message", user.getRoles());
         return "redirect:/admin/list_users";
     }
-    @PostMapping("/profile/modify")
+    @PostMapping("/profile/edit")
     public String modifyProfile(User user, Model model) {
         customUserDetailsService.save(user);
         model.addAttribute("message", user.getRoles());
