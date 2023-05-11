@@ -17,9 +17,8 @@
         });
 
         $('#catalogue tbody').on('click', 'tr', function () {
-            var showId = table.row( this ).data();
-        
-            window.location.href = '/shows/' + showId;; 
+            var showId = $(this).data('id');
+            window.location.href = '/shows/' + showId;;  
         });
     });
 </script>
