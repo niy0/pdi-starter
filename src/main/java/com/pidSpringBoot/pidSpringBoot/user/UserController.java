@@ -44,6 +44,23 @@ public class UserController {
         model.addAttribute("message", user.getRoles());
         return "redirect:/admin/list_users";
     }
+    @PostMapping("/profile/edit")
+    public String saveProfileInfo(User user, Model model) {
+        customUserDetailsService.save(user);
+        model.addAttribute("message", user.getRoles());
+        return "redirect:/profile";
+    }
+    
+    @GetMapping("/profile/edit/{id}")
+    public String editProfile(@PathVariable("id") Integer id, Model model){
+            User userToEdit = userRepository.findById(id).get();
+            List<Role> roleList = customUserDetailsService.listRoles();
+            model.addAttribute("isAdmin", true);
+            model.addAttribute("userToEdit", userToEdit);
+            model.addAttribute("listRoles", roleList);
+            return "user/edit";
+       
+    }
 
 
 
@@ -58,12 +75,13 @@ public class UserController {
 
     @GetMapping("/admin/edit/{id}")
     public String adminEditUser(@PathVariable("id") Integer id, Model model){
-        Optional<User> userToEdit = userRepository.findById(id);
-        List<Role> roleList = customUserDetailsService.listRoles();
-        model.addAttribute("isAdmin", true);
-        model.addAttribute("userToEdit", userToEdit);
-        model.addAttribute("listRoles", roleList);
-        return "admin/admin_edit_user";
+            User userToEdit = userRepository.findById(id).get();
+            List<Role> roleList = customUserDetailsService.listRoles();
+            model.addAttribute("isAdmin", true);
+            model.addAttribute("userToEdit", userToEdit);
+            model.addAttribute("listRoles", roleList);
+            return "admin/admin_edit_user";
+       
     }
     @GetMapping("/user/member_home")
     public String homeMember(Model model){
@@ -75,8 +93,6 @@ public class UserController {
         return "user/index";
     }
 
-
-
     @GetMapping("/profile")
     public String profile(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -86,7 +102,7 @@ public class UserController {
         model.addAttribute("user",user);
         model.addAttribute("isMember", true);
         model.addAttribute("isAdmin", false);
-        return "user/member_home";
+        return "user/profile";
     }
 
     @GetMapping("/admin/list_users")
@@ -149,49 +165,7 @@ public class UserController {
         }
 
 
-    @GetMapping("/users/edit/{id}")
-    public String edit(Model model, @PathVariable("id") String id, HttpServletRequest request) {
-        Optional<User> userOptional = userService.getUser(id);
-
-        userOptional.ifPresent(user -> model.addAttribute("user", user));
-
-        // Generate the back link for cancellation
-        String referrer = request.getHeader("Referer");
-
-        if(referrer != null && !referrer.equals("")) {
-            model.addAttribute("back", referrer);
-        } else {
-            userOptional.ifPresent(user -> model.addAttribute("back", "/users/" + user.getId()));
-        }
-
-        model.addAttribute("isMember", true);
-        return "user/edit.html";
-    }
-
-        @PutMapping("/users/edit/{id}")
-        public String update(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, @PathVariable("id") String id, Model model) {
-
-            if (bindingResult.hasErrors()) {
-                return "user/edit.html";
-            }
-
-            Optional<User> existing = userService.getUser(id);
-
-            if(existing==null) {
-                return "user/index";
-            }
-
-            Long indice = (long) Integer.parseInt(id);
-
-            user.setId(Math.toIntExact(indice));
-            userService.updateUser(String.valueOf(user.getId()), user);
-
-            model.addAttribute("user", user);
-            model.addAttribute("isMember", true);
-
-            return "redirect:/users/"+user.getId();
-        }
-
+   
 
         @DeleteMapping("/users/{id}")
         public String delete(@PathVariable("id") String id, Model model) throws LocationNotFoundException {
