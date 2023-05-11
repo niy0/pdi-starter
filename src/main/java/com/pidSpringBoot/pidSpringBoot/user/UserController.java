@@ -58,7 +58,6 @@ public class UserController {
 
     @GetMapping("/admin/edit/{id}")
     public String adminEditUser(@PathVariable("id") Integer id, Model model){
-        
             User userToEdit = userRepository.findById(id).get();
             List<Role> roleList = customUserDetailsService.listRoles();
             model.addAttribute("isAdmin", true);
