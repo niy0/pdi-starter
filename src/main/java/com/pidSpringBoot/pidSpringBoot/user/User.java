@@ -30,7 +30,8 @@ public class User {
     @Size(min=2, max=60, message = "The firstname must be between 2 and 60 characters long.")
     private String email;
 
-    private String langue;
+    @Enumerated(EnumType.STRING)
+    private Langue langue;
     private LocalDateTime created_at;
     @ManyToMany(mappedBy = "users")
     private List<Representation> representations = new ArrayList<>();
@@ -51,7 +52,7 @@ public class User {
         return created_at;
     }
 
-    public User(String login, String password, String firstName, String lastName, String email, String langue) {
+    public User(String login, String password, String firstName, String lastName, String email, Langue langue) {
         this.login = login;
         this.password = password;
         this.firstName = firstName;
@@ -132,12 +133,12 @@ public class User {
         return this;
     }
 
-    public String getLangue() {
+    public Langue getLangue() {
         return langue;
     }
 
     public void setLangue(Langue langue) {
-        this.langue = langue.name();
+        this.langue = langue;
     }
 
     public List<Representation> getRepresentations() {
@@ -170,7 +171,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", langue=" + langue +
+                ", langue=" + langue.name() +
                 ", roles=" + roles +
                 '}';
     }
