@@ -20,6 +20,17 @@
             var showId = $(this).data('id');
             window.location.href = '/shows/' + showId; 
         });
+        $('#deleteBtn').click(function() {
+            var showId = $(this).data('id');
+
+             $.ajax({
+                  url: '/shows/delete/' + showId,
+                  type: 'DELETE',
+                  success: function() {
+                        window.location.href = '/admin_home';
+                  }
+    });
+});
     });
    </script>
 </head>
@@ -63,9 +74,7 @@
                 </td>
                 <td>
                     <a class="btn btn-warning btn-sm" th:href="@{/shows/edit/} + ${show.id}">Edit</a>
-                   <form th:action="@{/shows/delete/} + ${show.id}" method="delete">
-                        <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                  </form>
+                    <button class="btn btn-danger btn-sm" id="deleteBtn" th:data-id="${show.id}">Delete</button>
                 </td>
             </tr>
             </tbody>
