@@ -2,6 +2,7 @@ package com.pidSpringBoot.pidSpringBoot.user;
 
 import com.pidSpringBoot.pidSpringBoot.Representation.Representation;
 import com.pidSpringBoot.pidSpringBoot.role.Role;
+import com.pidSpringBoot.pidSpringBoot.user.Langue;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
