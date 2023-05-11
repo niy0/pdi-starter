@@ -2,11 +2,16 @@
 <html lang="fr" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
       layout:decorate="~{layouts/main}" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Modification d'un user</title>
+       <title>Modification d'un user</title>
        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <style>
-.fieldError { color: red; }
-</style>
+      <style>
+            .fieldError { color: red; }
+      </style>
+      <script type="text/javascript">
+            function cancelForm(){
+                  window.location = "[[@{/profile}]]";
+             }
+      </script>
 </head>
 <body>
 <div class="container">
