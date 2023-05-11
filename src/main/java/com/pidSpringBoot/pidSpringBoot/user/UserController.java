@@ -45,14 +45,14 @@ public class UserController {
         return "redirect:/admin/list_users";
     }
     @PostMapping("/profile/edit")
-    public String modifyProfile(User user, Model model) {
+    public String saveProfileInfo(User user, Model model) {
         customUserDetailsService.save(user);
         model.addAttribute("message", user.getRoles());
         return "redirect:/profile";
     }
     
     @GetMapping("/profile/edit/{id}")
-    public String adminEditUser(@PathVariable("id") Integer id, Model model){
+    public String editProfile(@PathVariable("id") Integer id, Model model){
             User userToEdit = userRepository.findById(id).get();
             List<Role> roleList = customUserDetailsService.listRoles();
             model.addAttribute("isAdmin", true);
