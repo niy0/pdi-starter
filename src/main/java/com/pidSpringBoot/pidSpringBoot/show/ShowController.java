@@ -117,7 +117,7 @@ public class ShowController {
         return "redirect:/admin_home";
     }
 
-    @DeleteMapping("/shows/{id}")
+    @DeleteMapping("/shows/delete/{id}")
     public String delete(@PathVariable("id") String id, Model model) {
         Optional<Show> existing = repository.findById(Long.parseLong(id));
 
