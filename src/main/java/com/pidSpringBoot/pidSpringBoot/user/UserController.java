@@ -58,12 +58,15 @@ public class UserController {
 
     @GetMapping("/admin/edit/{id}")
     public String adminEditUser(@PathVariable("id") Integer id, Model model){
-        Optional<User> userToEdit = userRepository.findById(id);
-        List<Role> roleList = customUserDetailsService.listRoles();
-        model.addAttribute("isAdmin", true);
-        model.addAttribute("userToEdit", userToEdit);
-        model.addAttribute("listRoles", roleList);
-        return "admin/admin_edit_user";
+        if(userRepository.findById(id).isPresent()){
+            userToEdit = userRepository.findById(id).get();
+            List<Role> roleList = customUserDetailsService.listRoles();
+            model.addAttribute("isAdmin", true);
+            model.addAttribute("userToEdit", userToEdit);
+            model.addAttribute("listRoles", roleList);
+            return "admin/admin_edit_user";
+        }
+        return "redirect:admin/list_users";
     }
     @GetMapping("/user/member_home")
     public String homeMember(Model model){
