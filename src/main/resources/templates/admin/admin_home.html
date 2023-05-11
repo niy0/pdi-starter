@@ -11,7 +11,7 @@
      <script>
     $(document).ready(function() {
         var table = $('#catalogue').DataTable();
-
+      
         $('#searchInput').on('keyup', function() {
             table.search(this.value).draw();
         });
@@ -20,6 +20,7 @@
             var showId = $(this).data('id');
             window.location.href = '/shows/' + showId; 
         });
+          
         $('#deleteBtn').click(function() {
             var showId = $(this).data('id');
 
@@ -27,10 +28,10 @@
                   url: '/shows/delete/' + showId,
                   type: 'DELETE',
                   success: function() {
-                        window.location.href = '/admin_home';
+                        window.location.href = '/admin/admin_home';
                   }
-    });
-});
+             });
+        });
     });
    </script>
 </head>
