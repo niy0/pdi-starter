@@ -63,7 +63,7 @@
                 </td>
                 <td>
                     <a class="btn btn-warning btn-sm" th:href="@{/shows/edit/} + ${show.id}">Edit</a>
-                   <form th:action="@{/shows/delete/} + ${show.id}" method="post">
+                   <form th:action="@{/shows/delete/} + ${show.id}" method="delete">
                         <input type="submit" value="Delete" class="btn btn-danger btn-sm">
                   </form>
                 </td>
