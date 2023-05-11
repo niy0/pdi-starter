@@ -12,7 +12,7 @@
     <div layout:fragment="content">
         <h1 th:text="|${user.firstname}  ${user.lastname}|">Bob Sull</h1>
 
-        <form th:action="@{/users/edit/{id}}" th:object="${user}" th:method="put">
+        <form th:action="@{/profile/modify/{id}}" th:object="${user}" th:method="put">
 
             <input type="hidden" th:field="*{id}">
       <div class="border border-secondary rounded p-3">
