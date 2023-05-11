@@ -21,17 +21,7 @@
             window.location.href = '/shows/' + showId; 
         });
           
-        $('#deleteBtn').click(function() {
-            var showId = $(this).data('id');
-
-             $.ajax({
-                  url: '/shows/delete/' + showId,
-                  type: 'DELETE',
-                  success: function() {
-                        window.location.href = '/admin/admin_home';
-                  }
-             });
-        });
+        
     });
    </script>
 </head>
