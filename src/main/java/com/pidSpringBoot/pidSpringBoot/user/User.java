@@ -51,7 +51,7 @@ public class User {
         return created_at;
     }
 
-    public User(String login, String password, String firstName, String lastName, String email, String langue) {
+    public User(String login, String password, String firstName, String lastName, String email, Langue langue) {
         this.login = login;
         this.password = password;
         this.firstName = firstName;
@@ -133,11 +133,11 @@ public class User {
     }
 
     public String getLangue() {
-        return langue;
+        return langue.name();
     }
 
     public void setLangue(Langue langue) {
-        this.langue = langue.name();
+        this.langue = langue;
     }
 
     public List<Representation> getRepresentations() {
