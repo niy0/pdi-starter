@@ -15,11 +15,7 @@
         $('#searchInput').on('keyup', function() {
             table.search(this.value).draw();
         });
-
-        $('#catalogue tbody').on('click', 'tr', function () {
-            var showId = $(this).data('id');
-            window.location.href = '/shows/' + showId;;  
-        });
+      
     });
 </script>
 </head>
