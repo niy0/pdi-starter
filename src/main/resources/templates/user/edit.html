@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <div layout:fragment="content">
-        <h1 th:text="|${user.firstname}  ${user.lastname}|">Bob Sull</h1>
+        <h1 th:text="|${user.firstName}  ${user.lastName}|">Bob Sull</h1>
 
       <form th:action="@{/profile/edit}"  method="post" th:object="${userToEdit}" style="max-width: 700px; margin: 0 auto;">
 
