@@ -117,19 +117,17 @@ public class ShowController {
         return "redirect:/admin_home";
     }
 
-    @DeleteMapping("/shows/delete/{id}")
-    public String delete(@PathVariable("id") String id, Model model) {
-        Optional<Show> existing = repository.findById(Long.parseLong(id));
+   @DeleteMapping("/shows/delete/{id}")
+public ResponseEntity<?> delete(@PathVariable("id") String id, Model model) {
+    Optional<Show> existing = repository.findById(Long.parseLong(id));
 
-        if(existing!=null) {
-            Long indice = (long) Integer.parseInt(id);
-
-            service.deleteShow(String.valueOf(indice));
-        }
-        model.addAttribute("isAdmin", true);
-
-        return "redirect:/admin_home";
+    if(existing.isPresent()) { 
+        service.deleteShow(id);
+        return ResponseEntity.ok().build();
     }
+
+    return ResponseEntity.notFound().build();
+}
 
 
 
