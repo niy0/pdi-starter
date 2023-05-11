@@ -52,6 +52,18 @@
             </th:block>
           </div>
         </div>
+        <div class="form-group row">
+  <label for="langue" class="col-sm-4 col-form-label">Language :</label>
+  <div class="col-sm-8">
+    <select class="form-control" th:field="*{langue}" id="langue" required>
+      <option th:each="langue : ${T(com.pidSpringBoot.pidSpringBoot.user.Langue).values()}"
+              th:value="${langue}"
+              th:text="${langue}"
+              th:selected="${userToEdit.langue == langue}">Language
+      </option>
+    </select>
+  </div>
+</div>
        
         <div class="text-center ">
           <button type="submit" class="btn btn-primary m-2">Save</button>
