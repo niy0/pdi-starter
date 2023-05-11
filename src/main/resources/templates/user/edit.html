@@ -11,7 +11,6 @@
 <body>
 <div class="container">
     <div layout:fragment="content">
-        <h1 th:text="|${userToEdit.firstName}  ${userToEdit.lastName}|">Bob Sull</h1>
       <form th:action="@{/profile/edit}"  method="post" th:object="${userToEdit}" style="max-width: 700px; margin: 0 auto;">
             <input type="hidden" th:field="*{id}">
             <div class="border border-secondary rounded p-3">
