@@ -29,8 +29,8 @@ public class User {
     @NotEmpty(message = "The firstname must not be empty.")
     @Size(min=2, max=60, message = "The firstname must be between 2 and 60 characters long.")
     private String email;
-   @Enumerated(EnumType.STRING)
-    private Langue langue;
+
+    private String langue;
     private LocalDateTime created_at;
     @ManyToMany(mappedBy = "users")
     private List<Representation> representations = new ArrayList<>();
@@ -51,7 +51,7 @@ public class User {
         return created_at;
     }
 
-    public User(String login, String password, String firstName, String lastName, String email, Langue langue) {
+    public User(String login, String password, String firstName, String lastName, String email, String langue) {
         this.login = login;
         this.password = password;
         this.firstName = firstName;
@@ -137,7 +137,7 @@ public class User {
     }
 
     public void setLangue(Langue langue) {
-        this.langue = langue;
+        this.langue = langue.name();
     }
 
     public List<Representation> getRepresentations() {
