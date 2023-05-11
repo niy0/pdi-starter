@@ -133,7 +133,7 @@ public class User {
     }
 
     public String getLangue() {
-        return langue.name();
+        return langue;
     }
 
     public void setLangue(Langue langue) {
