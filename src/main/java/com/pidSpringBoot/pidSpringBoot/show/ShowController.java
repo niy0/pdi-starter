@@ -21,6 +21,11 @@ public class ShowController {
 
     @Autowired
     ShowRepository repository;
+    
+     @Autowired
+    LocationService service;
+    
+    
 
     @GetMapping("/shows")
     public String index(Model model) {
