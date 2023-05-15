@@ -23,7 +23,7 @@ public class ShowController {
     ShowRepository repository;
     
      @Autowired
-    LocationService service;
+    LocationService locationService;
     
     
 
