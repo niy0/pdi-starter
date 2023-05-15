@@ -85,7 +85,7 @@ public class ShowController {
         Show show = service.get(id);
 
          model.addAttribute("show", show);
-        model.addAttribute("locations", locationService.getAll());
+        model.addAttribute("locations", locationService.listAll());
 
 
         String referrer = request.getHeader("Referer");
