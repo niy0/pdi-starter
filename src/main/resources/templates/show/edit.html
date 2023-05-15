@@ -31,7 +31,7 @@
             <div class="form-group">
                   <label for="location">Location:</label>
                   <select id="location" th:field="*{location}" class="form-control">
-                        <option th:each="location : ${locations}" th:value="${location}" th:text="${location.designation}"></option>
+                      <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.designation}"></option>
                   </select>
             </div>
             <div class="form-group">
