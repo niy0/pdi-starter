@@ -19,6 +19,14 @@
                 <input type="text" class="form-control" id="title" th:field="*{title}" required>
             </div>
             <div class="form-group">
+                <label for="title">Description:</label>
+                <input type="text" class="form-control" id="title" th:field="*{description}" required>
+            </div>
+             <div class="form-group">
+                <label for="title">Poster Url:</label>
+                <input type="text" class="form-control" id="title" th:field="*{posterUrl}" required>
+            </div>
+            <div class="form-group">
                 <label for="location">Location:</label>
                 <input type="text" class="form-control" id="location" th:field="*{location.designation}">
             </div>
@@ -32,9 +40,7 @@
             </div>
             <button type="submit" class="btn btn-primary">modifier</button>
         </form>
-    </div>
-        <nav><a th:href="@{/users}">Retour à l'index</a></nav>
-    </div>
+    
 </div>
 </body>
 </html>
