@@ -88,38 +88,27 @@ public class ShowController {
          model.addAttribute("show", show);
         model.addAttribute("locations", locationService.listAll());
 
-
-        String referrer = request.getHeader("Referer");
-
-        if(referrer != null && !referrer.equals("")) {
-            model.addAttribute("back", referrer);
-        } else {
-            model.addAttribute("back", "/shows/" + show.getId());
-        }
-
         model.addAttribute("isAdmin", true);
         return "show/edit";
     }
 
     @PutMapping("/shows/edit/{id}")
-    public String update(@Valid @ModelAttribute("show") Show show, BindingResult bindingResult, @PathVariable("id") String id, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "show/edit";
+    public String update(@PathVariable("id") long id, @Valid @ModelAttribute Show show, Model model) {
+        Show existingShowOpt = repository.findById(id);
+        if (existingShowOpt.isPresent()) {
+            Show existingShow = existingShowOpt.get();
+        }else{
+             return "show/index";
         }
+        existingShow.setTitle(show.getTitle());
+        existingShow.setDescription(show.getDescription());
+        existingShow.setPosterUrl(show.getPosterUrl());
+        existingShow.setLocation(show.getLocation());
+        existingShow.setPrice(show.getPrice());
+        existingShow.setBookable(show.getBookable());
 
-        Show existing = service.get(id);
-
-        if(existing==null) {
-            return "show/index";
-        }
-
-        Long indice = (long) Integer.parseInt(id);
-
-        show.setId(indice);
-        service.update(String.valueOf(show.getId()), show);
-
-        model.addAttribute("show", show);
+      
+        service.update(existingShow);
         model.addAttribute("isAdmin", true);
 
         return "redirect:/admin_home";
