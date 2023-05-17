@@ -56,7 +56,7 @@
       </td>
       <td>
           <p th:if="${show.bookable}" th:text="${show.price} + ' €'">prix</p>
-          <p th:unless="${show.bookable}"><em>Pas disponible</em></p>
+          <p th:unless="${show.bookable}"><em>"0 €"</em></p>
       </td>
       <td>
           <p th:if="${show.bookable}"><em>oui</em></p>
