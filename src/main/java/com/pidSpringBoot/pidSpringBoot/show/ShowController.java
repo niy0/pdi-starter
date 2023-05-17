@@ -87,10 +87,12 @@ public class ShowController {
         return "redirect:/shows/" + show.getId();
     }
     @GetMapping("/shows/edit/{id}")
-    public String edit(Model model, @PathVariable("id") String id, HttpServletRequest request) {
-        Show show = service.get(id);
-
-         model.addAttribute("show", show);
+    public String edit(Model model, @PathVariable("id") Long id, HttpServletRequest request) {
+        Show show = null;
+        if (repository.findById(id).isPresent()){
+            show = repository.findById(id).get();
+        }
+        model.addAttribute("show", show);
         model.addAttribute("locations", locationService.listAll());
 
         model.addAttribute("isAdmin", true);
