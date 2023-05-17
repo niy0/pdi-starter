@@ -56,6 +56,9 @@ public class Show {
     @ManyToMany(mappedBy = "shows")
     private List<ArtistType> artistTypes = new ArrayList<>();
 
+    @Transient
+    private int locationId;
+
 
     public Show() {
     }
@@ -81,7 +84,13 @@ public class Show {
     public void setId(Long id) {
         this.id = id;
     }
+    public int getLocationId() {
+        return locationId;
+    }
 
+    public void setLocationId(int id) {
+        this.locationId = id;
+    }
     public String getSlug() {
         return slug;
     }
@@ -123,9 +132,15 @@ public class Show {
     }
 
     public void setLocation(Location location) {
-        this.location.removeShow(this);	//déménager de l’ancien lieu
+        if (this.location != null) {
+            this.location.removeShow(this); 
+        }
+    
         this.location = location;
-        this.location.addShow(this);		//emménager dans le nouveau lieu
+    
+        if (location != null) {
+            this.location.addShow(this); 
+        }
     }
 
     public boolean isBookable() {

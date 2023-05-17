@@ -3,6 +3,7 @@ package com.pidSpringBoot.pidSpringBoot.show;
 import com.pidSpringBoot.pidSpringBoot.ArtistType.ArtistType;
 import com.pidSpringBoot.pidSpringBoot.artist.Artist;
 import com.pidSpringBoot.pidSpringBoot.user.User;
+import com.pidSpringBoot.pidSpringBoot.location.Location;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import com.pidSpringBoot.pidSpringBoot.location.LocationService;
+import com.pidSpringBoot.pidSpringBoot.location.LocationRepository;
 
 import java.util.*;
 
@@ -20,6 +24,14 @@ public class ShowController {
 
     @Autowired
     ShowRepository repository;
+    
+     @Autowired
+    LocationService locationService;
+    
+      @Autowired
+    LocationRepository locationRepository;
+    
+    
 
     @GetMapping("/shows")
     public String index(Model model) {
@@ -75,61 +87,45 @@ public class ShowController {
         return "redirect:/shows/" + show.getId();
     }
     @GetMapping("/shows/edit/{id}")
-    public String edit(Model model, @PathVariable("id") String id, HttpServletRequest request) {
-        Show show = service.get(id);
-
-         model.addAttribute("show", show);
-
-
-        String referrer = request.getHeader("Referer");
-
-        if(referrer != null && !referrer.equals("")) {
-            model.addAttribute("back", referrer);
-        } else {
-            model.addAttribute("back", "/shows/" + show.getId());
+    public String edit(Model model, @PathVariable("id") Long id, HttpServletRequest request) {
+        Show show = null;
+        
+        if (repository.findById(id).isPresent()){
+            show = repository.findById(id).get();
         }
+     
+        model.addAttribute("show", show);
+        model.addAttribute("locations", locationService.listAll());
 
         model.addAttribute("isAdmin", true);
         return "show/edit";
     }
-
     @PutMapping("/shows/edit/{id}")
-    public String update(@Valid @ModelAttribute("show") Show show, BindingResult bindingResult, @PathVariable("id") String id, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "show/edit";
+    public String updateShow(@PathVariable("id") Long id, @ModelAttribute("show") Show show, Model model) {
+        int locationId = show.getLocationId();
+        Optional<Location> optionalLocation = locationRepository.findById(locationId);
+        if(optionalLocation.isPresent()) {
+            show.setLocation(optionalLocation.get());
         }
-
-        Show existing = service.get(id);
-
-        if(existing==null) {
-            return "show/index";
-        }
-
-        Long indice = (long) Integer.parseInt(id);
-
-        show.setId(indice);
-        service.update(String.valueOf(show.getId()), show);
-
-        model.addAttribute("show", show);
-        model.addAttribute("isAdmin", true);
-
-        return "redirect:/admin_home";
+            service.update(show);
+            model.addAttribute("isAdmin", true);
+            return "redirect:/shows/" + id;
+    
     }
 
-    @DeleteMapping("/shows/{id}")
-    public String delete(@PathVariable("id") String id, Model model) {
-        Optional<Show> existing = repository.findById(Long.parseLong(id));
+     
 
-        if(existing!=null) {
-            Long indice = (long) Integer.parseInt(id);
+   @DeleteMapping("/shows/delete/{id}")
+public ResponseEntity<?> delete(@PathVariable("id") String id, Model model) {
+    Optional<Show> existing = repository.findById(Long.parseLong(id));
 
-            service.deleteShow(String.valueOf(indice));
-        }
-        model.addAttribute("isAdmin", true);
-
-        return "redirect:/admin_home";
+    if(existing.isPresent()) { 
+        service.deleteShow(id);
+        return ResponseEntity.ok().build();
     }
+
+    return ResponseEntity.notFound().build();
+}
 
 
 

@@ -9,13 +9,20 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
      <script>
-        $(document).ready(function() {
-            var table = $('#catalogue').DataTable();
-
-            $('#searchInput').on('keyup', function() {
-                  table.search(this.value).draw();
-             });
+    $(document).ready(function() {
+        var table = $('#catalogue').DataTable();
+      
+        $('#searchInput').on('keyup', function() {
+            table.search(this.value).draw();
         });
+
+        $('#catalogue tbody').on('click', 'tr', function () {
+            var showId = $(this).data('id');
+            window.location.href = '/shows/' + showId; 
+        });
+          
+        
+    });
    </script>
 </head>
 <body>
@@ -38,7 +45,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="show : ${shows}">
+           <tr th:each="show : ${shows}" th:data-id="${show.id}">
                 <td th:text="${show.title}">title</td>
                 <td><span th:each="artistType : ${show.getArtistTypes()}"
                           th:if="${artistType.type.type == 'auteur'}">
@@ -52,17 +59,18 @@
                     <p th:if="${show.location}" th:text="${show.location.designation}">location</p>
                     <p th:unless="${show.location}"><em>Pas disponible</em></p>
                 </td>
-                <td th:if="${show.bookable}" th:text="${show.price} + ' €'"></td>
-                <td th:if="${show.bookable}"><p><em>oui</em></p>
-                    <p th:unless="${show.bookable}"><em>non</em></p>
+                <td>
+                    <p th:if="${show.bookable}" th:text="${show.price} + ' €'">prix</p>
+                    <p th:unless="${show.bookable}"><em>Pas disponible</em></p>
                 </td>
                 <td>
-                    <a class="btn btn-info btn-sm" th:href="@{/shows/} + ${show.id}">Read</a>
+                    <p th:if="${show.bookable}"><em>oui</em></p>
+                    <p th:unless="${show.bookable}"><em>non</em></p>
+                </td>
+          
+                <td>
                     <a class="btn btn-warning btn-sm" th:href="@{/shows/edit/} + ${show.id}">Edit</a>
-                    <form th:action="@{/shows/{id}}" th:method="delete">
-                        <input type="hidden" name="id" th:value="${show.id}" />
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+                    <button class="btn btn-danger btn-sm" id="deleteBtn" th:data-id="${show.id}">Delete</button>
                 </td>
             </tr>
             </tbody>

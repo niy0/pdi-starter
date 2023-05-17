@@ -64,7 +64,7 @@ public class UserController {
 
 
 
-    @GetMapping("/admin/admin_home")
+    @GetMapping("/admin/home")
     public String homeAdmin(Model model){
         List<Show> shows = showService.getAll();
         model.addAttribute("isAdmin", true);

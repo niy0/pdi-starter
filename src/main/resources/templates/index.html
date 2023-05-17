@@ -2,21 +2,26 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
       layout:decorate="~{layouts/main}">
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            var table = $('#catalogue').DataTable();
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        var table = $('#catalogue').DataTable();
 
-            $('#searchInput').on('keyup', function() {
-                  table.search(this.value).draw();
-             });
+        $('#searchInput').on('keyup', function() {
+            table.search(this.value).draw();
         });
-   </script>
+
+        $('#catalogue tbody').on('click', 'tr', function () {
+            var showId = $(this).data('id');
+            window.location.href = '/shows/' + showId; 
+        });
+    });
+</script>
 </head>
 <body>
 
@@ -35,34 +40,38 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="show : ${shows}">
-                <td th:text="${show.title}">title</td>
-                <td><span th:each="artistType : ${show.getArtistTypes()}"
-                          th:if="${artistType.type.type == 'auteur'}">
+            <tr th:each="show : ${shows}" th:data-id="${show.id}">
+        <td th:text="${show.title}">title</td>
+        <td><span th:each="artistType : ${show.getArtistTypes()}"
+                  th:if="${artistType.type.type == 'auteur'}">
                             <span th:each="auteur,iter : ${artistType.getArtist()}"
                                   th:text="${auteur.firstname} + ' ' + ${auteur.lastname} + (${iter.count} == ${iter.size} - 1 ? ' et ' : (${iter.last} ? '' : ', '))">
                                 Firstname Lastname
                             </span>
                          </span>
-                </td>
-                <td>
-                    <p th:if="${show.location}" th:text="${show.location.designation}">location</p>
-                    <p th:unless="${show.location}"><em>Pas disponible</em></p>
-                </td>
-                <td th:if="${show.bookable}" th:text="${show.price} + ' €'"></td>
-                <td th:if="${show.bookable}"><p><em>oui</em></p>
-                    <p th:unless="${show.bookable}"><em>non</em></p>
-                </td>
-            </tr>
+        </td>
+        <td>
+          <p th:if="${show.location}" th:text="${show.location.designation}">location</p>
+          <p th:unless="${show.location}"><em>Pas disponible</em></p>
+      </td>
+      <td>
+          <p th:if="${show.bookable}" th:text="${show.price} + ' €'">prix</p>
+          <p th:unless="${show.bookable}"><em>Pas disponible</em></p>
+      </td>
+      <td>
+          <p th:if="${show.bookable}"><em>oui</em></p>
+          <p th:unless="${show.bookable}"><em>non</em></p>
+      </td>
+      </tr>
 
-            </tbody>
-            <tfoot>
-            </tfoot>
-        </table>
-    </div>
+      </tbody>
+      <tfoot>
+      </tfoot>
+    </table>
+  </div>
 </div>
 
 
-    </div>
+</div>
 </body>
 </html>
