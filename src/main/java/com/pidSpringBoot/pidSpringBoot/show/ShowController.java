@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import com.pidSpringBoot.pidSpringBoot.location.LocationService;
+import com.pidSpringBoot.pidSpringBoot.location.LocationRepository;
 
 import java.util.*;
 
@@ -26,6 +27,9 @@ public class ShowController {
     
      @Autowired
     LocationService locationService;
+    
+      @Autowired
+    LocationRepository locationRepository;
     
     
 
