@@ -93,8 +93,8 @@ public class ShowController {
     }
 @PutMapping("/shows/{id}")
 public String updateShow(@PathVariable("id") Long id, @Valid @ModelAttribute("show") Show show, Model model) {
-    if (service.findById(id).isPresent()) {
-        Show existingShow = service.findById(id).get();
+    if (repository.findById(id).isPresent()) {
+        Show existingShow = repository.findById(id).get();
         existingShow.setTitle(show.getTitle());
         existingShow.setDescription(show.getDescription());
         existingShow.setPosterUrl(show.getPosterUrl());
