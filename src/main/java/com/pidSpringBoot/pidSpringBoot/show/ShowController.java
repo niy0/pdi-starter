@@ -93,13 +93,8 @@ public class ShowController {
     }
 
     @PostMapping("/shows/edit/{id}")
-    public String update(@PathVariable("id") long id, @Valid @ModelAttribute Show show, Model model) {
-        Show existingShow = null;
-        if (repository.findById(id).isPresent()) {
-            existingShow = repository.findById(id).get();
-        }else{
-             return "show/index";
-        }
+    public String update(@PathVariable("id") String id, @Valid @ModelAttribute Show show, Model model) {
+        Show existingShow = service.get(id);
         existingShow.setTitle(show.getTitle());
         existingShow.setDescription(show.getDescription());
         existingShow.setPosterUrl(show.getPosterUrl());
@@ -107,7 +102,6 @@ public class ShowController {
         existingShow.setPrice(show.getPrice());
         existingShow.setBookable(show.isBookable());
 
-      
         service.update(existingShow);
         model.addAttribute("isAdmin", true);
 
