@@ -33,7 +33,7 @@ public class ShowService {
         repository.save(show);
     }
 
-    public void update(String id, Show show) {
+    public void update(Show show) {
         repository.save(show);
     }
 
