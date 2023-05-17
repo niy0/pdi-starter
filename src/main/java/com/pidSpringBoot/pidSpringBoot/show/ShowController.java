@@ -100,7 +100,7 @@ public class ShowController {
     }
     @PutMapping("/shows/edit/{id}")
     public String updateShow(@PathVariable("id") Long id, @Valid @ModelAttribute("show") Show show, Model model) {
-            service.update(existingShow);
+            service.update(show);
             model.addAttribute("isAdmin", true);
             return "redirect:/shows/" + id;
     
