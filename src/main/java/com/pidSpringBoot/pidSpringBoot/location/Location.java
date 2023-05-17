@@ -109,14 +109,14 @@ public class Location {
         this.locality.addLocation(this);		//emménager dans la nouvelle localité
     }
     public Location addShow(Show show) {
-        if(!this.shows.contains(show)) {
+        if (!this.shows.contains(show)) {
             this.shows.add(show);
-            show.setLocation(this);
+            if (show.getLocation() != this) { 
+                show.setLocation(this);
+            }
         }
-
         return this;
     }
-
     public Location removeShow(Show show) {
         if(this.shows.contains(show)) {
             this.shows.remove(show);

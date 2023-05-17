@@ -89,9 +89,11 @@ public class ShowController {
     @GetMapping("/shows/edit/{id}")
     public String edit(Model model, @PathVariable("id") Long id, HttpServletRequest request) {
         Show show = null;
+        
         if (repository.findById(id).isPresent()){
             show = repository.findById(id).get();
         }
+     
         model.addAttribute("show", show);
         model.addAttribute("locations", locationService.listAll());
 
@@ -100,6 +102,11 @@ public class ShowController {
     }
     @PutMapping("/shows/edit/{id}")
     public String updateShow(@PathVariable("id") Long id, @ModelAttribute("show") Show show, Model model) {
+        int locationId = show.getLocationId();
+        Optional<Location> optionalLocation = locationRepository.findById(locationId);
+        if(optionalLocation.isPresent()) {
+            show.setLocation(optionalLocation.get());
+        }
             service.update(show);
             model.addAttribute("isAdmin", true);
             return "redirect:/shows/" + id;

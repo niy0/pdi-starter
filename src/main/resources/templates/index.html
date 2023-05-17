@@ -53,11 +53,15 @@
         <td>
           <p th:if="${show.location}" th:text="${show.location.designation}">location</p>
           <p th:unless="${show.location}"><em>Pas disponible</em></p>
-        </td>
-        <td th:if="${show.bookable}" th:text="${show.price} + ' €'"></td>
-        <td th:if="${show.bookable}"><p><em>oui</em></p>
+      </td>
+      <td>
+          <p th:if="${show.bookable}" th:text="${show.price} + ' €'">prix</p>
+          <p th:unless="${show.bookable}"><em>Pas disponible</em></p>
+      </td>
+      <td>
+          <p th:if="${show.bookable}"><em>oui</em></p>
           <p th:unless="${show.bookable}"><em>non</em></p>
-        </td>
+      </td>
       </tr>
 
       </tbody>
