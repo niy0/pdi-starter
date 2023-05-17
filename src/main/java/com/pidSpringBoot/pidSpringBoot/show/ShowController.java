@@ -100,17 +100,6 @@ public class ShowController {
     }
     @PutMapping("/shows/edit/{id}")
     public String updateShow(@PathVariable("id") Long id, @Valid @ModelAttribute("show") Show show, Model model) {
-        if (repository.findById(id).isPresent()) {
-            Show existingShow = repository.findById(id).get();
-            existingShow.setTitle(show.getTitle());
-            existingShow.setDescription(show.getDescription());
-            existingShow.setPosterUrl(show.getPosterUrl());
-            Location location = locationRepository.findById(show.getLocation().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid location Id:" + show.getLocation().getId()));
-            existingShow.setLocation(location);
-            existingShow.setLocation(location);
-            existingShow.setPrice(show.getPrice());
-            existingShow.setBookable(show.isBookable());
-
             service.update(existingShow);
             model.addAttribute("isAdmin", true);
             return "redirect:/shows/" + id;
