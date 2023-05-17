@@ -91,7 +91,7 @@ public class ShowController {
         model.addAttribute("isAdmin", true);
         return "show/edit";
     }
-@PutMapping("/shows/{id}")
+@PutMapping("/shows/edit/{id}")
 public String updateShow(@PathVariable("id") Long id, @Valid @ModelAttribute("show") Show show, Model model) {
     if (repository.findById(id).isPresent()) {
         Show existingShow = repository.findById(id).get();
