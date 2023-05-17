@@ -91,24 +91,24 @@ public class ShowController {
         model.addAttribute("isAdmin", true);
         return "show/edit";
     }
-@PutMapping("/shows/edit/{id}")
-public String updateShow(@PathVariable("id") Long id, @Valid @ModelAttribute("show") Show show, Model model) {
-    if (repository.findById(id).isPresent()) {
-        Show existingShow = repository.findById(id).get();
-        existingShow.setTitle(show.getTitle());
-        existingShow.setDescription(show.getDescription());
-        existingShow.setPosterUrl(show.getPosterUrl());
-        existingShow.setLocation(show.getLocation());
-        existingShow.setPrice(show.getPrice());
-        existingShow.setBookable(show.isBookable());
+    @PutMapping("/shows/edit/{id}")
+    public String updateShow(@PathVariable("id") Long id, @Valid @ModelAttribute("show") Show show, Model model) {
+        if (repository.findById(id).isPresent()) {
+            Show existingShow = repository.findById(id).get();
+            existingShow.setTitle(show.getTitle());
+            existingShow.setDescription(show.getDescription());
+            existingShow.setPosterUrl(show.getPosterUrl());
+            existingShow.setLocation(show.getLocation());
+            existingShow.setPrice(show.getPrice());
+            existingShow.setBookable(show.isBookable());
 
-        service.update(existingShow);
-        model.addAttribute("isAdmin", true);
-        return "redirect:/shows/" + id;
-    } else {
-        return "redirect:/shows/edit" + show.getId();
+            service.update(existingShow);
+            model.addAttribute("isAdmin", true);
+            return "redirect:/shows/" + id;
+        } else {
+            return "redirect:/shows/edit" + show.getId();
+        }
     }
-}
 
      
 
