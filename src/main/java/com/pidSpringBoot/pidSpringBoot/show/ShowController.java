@@ -105,7 +105,7 @@ public class ShowController {
         service.update(existingShow);
         model.addAttribute("isAdmin", true);
 
-        return "redirect:/admin_home";
+        return "redirect:/shows/" + show.getId();
     }
 
    @DeleteMapping("/shows/delete/{id}")
