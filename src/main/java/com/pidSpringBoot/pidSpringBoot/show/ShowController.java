@@ -105,7 +105,7 @@ public class ShowController {
         existingShow.setPosterUrl(show.getPosterUrl());
         existingShow.setLocation(show.getLocation());
         existingShow.setPrice(show.getPrice());
-        existingShow.setBookable(show.getBookable());
+        existingShow.setBookable(show.isBookable());
 
       
         service.update(existingShow);
