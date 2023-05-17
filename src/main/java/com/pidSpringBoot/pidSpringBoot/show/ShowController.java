@@ -92,7 +92,7 @@ public class ShowController {
         return "show/edit";
     }
 
-    @PutMapping("/shows/edit/{id}")
+    @PostMapping("/shows/edit/{id}")
     public String update(@PathVariable("id") long id, @Valid @ModelAttribute Show show, Model model) {
         Show existingShow = null;
         if (repository.findById(id).isPresent()) {
