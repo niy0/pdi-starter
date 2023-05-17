@@ -103,9 +103,7 @@ public class ShowController {
             service.update(existingShow);
             model.addAttribute("isAdmin", true);
             return "redirect:/shows/" + id;
-        } else {
-            return "redirect:/shows/edit" + show.getId();
-        }
+    
     }
 
      
