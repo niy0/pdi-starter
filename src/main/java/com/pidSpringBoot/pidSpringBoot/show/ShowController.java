@@ -94,10 +94,9 @@ public class ShowController {
 
     @PutMapping("/shows/edit/{id}")
     public String update(@PathVariable("id") long id, @Valid @ModelAttribute Show show, Model model) {
-        Show existingShowOpt = repository.findById(id);
         Show existingShow = null;
-        if (existingShowOpt.isPresent()) {
-            existingShow = existingShowOpt.get();
+        if (repository.findById(id).isPresent()) {
+            existingShow = repository.findById(id).get();
         }else{
              return "show/index";
         }
