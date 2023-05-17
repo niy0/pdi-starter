@@ -91,10 +91,10 @@ public class ShowController {
         model.addAttribute("isAdmin", true);
         return "show/edit";
     }
-
-    @PostMapping("/shows/edit/{id}")
-    public String update(@PathVariable("id") String id, @Valid @ModelAttribute Show show, Model model) {
-        Show existingShow = service.get(id);
+@PutMapping("/shows/{id}")
+public String updateShow(@PathVariable("id") Long id, @Valid @ModelAttribute("show") Show show, Model model) {
+    if (service.findById(id).isPresent()) {
+        Show existingShow = service.findById(id).get();
         existingShow.setTitle(show.getTitle());
         existingShow.setDescription(show.getDescription());
         existingShow.setPosterUrl(show.getPosterUrl());
@@ -104,9 +104,13 @@ public class ShowController {
 
         service.update(existingShow);
         model.addAttribute("isAdmin", true);
-
-        return "redirect:/shows/" + show.getId();
+        return "redirect:/shows/" + id;
+    } else {
+      redirect:/shows/edit" + show.getId();
     }
+}
+
+     
 
    @DeleteMapping("/shows/delete/{id}")
 public ResponseEntity<?> delete(@PathVariable("id") String id, Model model) {
