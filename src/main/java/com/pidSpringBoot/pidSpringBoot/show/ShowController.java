@@ -98,7 +98,11 @@ public class ShowController {
             existingShow.setTitle(show.getTitle());
             existingShow.setDescription(show.getDescription());
             existingShow.setPosterUrl(show.getPosterUrl());
-            existingShow.setLocation(show.getLocation());
+            Location location = null;
+            if (locationRepository.findById(show.getLocation().getId()).isPresent()){
+               location = locationRepository.findById(show.getLocation().getId()).get();
+            }
+            existingShow.setLocation(location);
             existingShow.setPrice(show.getPrice());
             existingShow.setBookable(show.isBookable());
 
