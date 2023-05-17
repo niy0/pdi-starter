@@ -103,10 +103,8 @@ public class ShowController {
             existingShow.setTitle(show.getTitle());
             existingShow.setDescription(show.getDescription());
             existingShow.setPosterUrl(show.getPosterUrl());
-            Location location = null;
-            if (locationRepository.findById(show.getLocation().getId()).isPresent()){
-               location = locationRepository.findById(show.getLocation().getId()).get();
-            }
+            Location location = locationRepository.findById(show.getLocation().getId()).orElseThrow(() -> new IllegalArgumentException("Invalid location Id:" + show.getLocation().getId()));
+            existingShow.setLocation(location);
             existingShow.setLocation(location);
             existingShow.setPrice(show.getPrice());
             existingShow.setBookable(show.isBookable());
