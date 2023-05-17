@@ -3,6 +3,7 @@ package com.pidSpringBoot.pidSpringBoot.show;
 import com.pidSpringBoot.pidSpringBoot.ArtistType.ArtistType;
 import com.pidSpringBoot.pidSpringBoot.artist.Artist;
 import com.pidSpringBoot.pidSpringBoot.user.User;
+import com.pidSpringBoot.pidSpringBoot.location.Location;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
