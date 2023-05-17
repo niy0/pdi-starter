@@ -106,7 +106,7 @@ public String updateShow(@PathVariable("id") Long id, @Valid @ModelAttribute("sh
         model.addAttribute("isAdmin", true);
         return "redirect:/shows/" + id;
     } else {
-      redirect:/shows/edit" + show.getId();
+        return "redirect:/shows/edit" + show.getId();
     }
 }
 
