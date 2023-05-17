@@ -11,6 +11,10 @@ public class PidSpringBootApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PidSpringBootApplication.class, args);
 	}
+	@Bean
+	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+   	 return new HiddenHttpMethodFilter();
+	}
 	
 
 }
