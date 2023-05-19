@@ -73,17 +73,18 @@ public class ShowController {
         Show show = new Show();
         model.addAttribute("isAdmin", true);
         model.addAttribute("show", show);
+        model.addAttribute("locations", locationService.listAll());
         return "show/create";
     }
     @PostMapping("/shows/create")
-    public String store(@Valid @ModelAttribute("show") Show show, BindingResult bindingResult, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "show/create";
+    public String store(@Valid @ModelAttribute("show") Show show, Model model) {
+        int locationId = show.getLocationId();
+        Optional<Location> optionalLocation = locationRepository.findById(locationId);
+        if(optionalLocation.isPresent()) {
+            show.setLocation(optionalLocation.get());
         }
-
         service.add(show);
-
+        model.addAttribute("isAdmin", true);
         return "redirect:/shows/" + show.getId();
     }
     @GetMapping("/shows/edit/{id}")
@@ -115,16 +116,15 @@ public class ShowController {
 
      
 
-   @DeleteMapping("/shows/delete/{id}")
-public ResponseEntity<?> delete(@PathVariable("id") String id, Model model) {
+@DeleteMapping("/shows/delete/{id}")
+public String delete(@PathVariable("id") String id, Model model) {
     Optional<Show> existing = repository.findById(Long.parseLong(id));
 
     if(existing.isPresent()) { 
         service.deleteShow(id);
-        return ResponseEntity.ok().build();
+        
     }
-
-    return ResponseEntity.notFound().build();
+    return "redirect:/admin/home" ;
 }
 
 
