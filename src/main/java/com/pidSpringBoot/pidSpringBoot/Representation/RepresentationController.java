@@ -28,8 +28,8 @@ public class RepresentationController {
         Representation representation = service.get(id);
 
         model.addAttribute("representation", representation);
-        model.addAttribute("date", representation.getWhen().toLocalDate());
-        model.addAttribute("heure", representation.getWhen().toLocalTime());
+        model.addAttribute("date", representation.getEventTime().toLocalDate());
+        model.addAttribute("heure", representation.getEventTime().toLocalTime());
         model.addAttribute("title", "Fiche d'une representation");
 
         return "representation/show";

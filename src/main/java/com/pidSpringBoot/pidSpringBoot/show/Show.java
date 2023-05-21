@@ -37,7 +37,7 @@ public class Show {
     private boolean bookable;
     private double price;
 
-    @OneToMany(targetEntity= Representation.class, mappedBy="show")
+    @OneToMany(targetEntity= Representation.class, mappedBy="show", cascade = CascadeType.ALL)
     private List<Representation> representations = new ArrayList<>();
 
 
@@ -53,11 +53,22 @@ public class Show {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToMany(mappedBy = "shows")
+    @ManyToMany(mappedBy = "shows",cascade = CascadeType.ALL)
     private List<ArtistType> artistTypes = new ArrayList<>();
 
     @Transient
     private int locationId;
+
+    @Transient
+    private int authorId;
+
+    @Transient
+    private int directorId;
+
+    @Transient
+    private int distributionId;
+   
+    
 
 
     public Show() {
@@ -89,6 +100,27 @@ public class Show {
     }
 
     public void setLocationId(int id) {
+        this.locationId = id;
+    }
+    public int getAuthorId() {
+        return locationId;
+    }
+
+    public void setAuthorId(int id) {
+        this.locationId = id;
+    }
+    public int getDirectorId() {
+        return locationId;
+    }
+
+    public void setDirectorId(int id) {
+        this.locationId = id;
+    }
+    public int getDistributionId() {
+        return locationId;
+    }
+
+    public void setDistributionId(int id) {
         this.locationId = id;
     }
     public String getSlug() {

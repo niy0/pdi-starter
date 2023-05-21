@@ -33,7 +33,7 @@
         <h3>Représentations</h3>
         <ul class="list-group">
           <li class="list-group-item" th:each="representation : ${show.representations}">
-            <span th:text="${#temporals.format(representation.when,'dd-MM-yyyy HH:mm')}">12-10-2012 13:30</span>
+            <span th:text="${#temporals.format(representation.eventTime,'dd-MM-yyyy HH:mm')}">12-10-2012 13:30</span>
             <form th:action="@{/addToCart/{id}(id=${representation.id})}" method="post">
               <button class="btn btn-danger" type="submit">Réserver</button>
             </form>
