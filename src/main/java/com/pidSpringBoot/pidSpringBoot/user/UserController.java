@@ -83,7 +83,7 @@ public class UserController {
             return "admin/admin_edit_user";
        
     }
-    @GetMapping("/user/member_home")
+    @GetMapping("/member/home")
     public String homeMember(Model model){
         List<Show> shows = showService.getAll();
         model.addAttribute("isAdmin", false);
