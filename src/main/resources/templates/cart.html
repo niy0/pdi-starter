@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<head>
+  <title>panier</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container">
+  <div layout:fragment="content">
+    <h1>Panier</h1>
+    <p>Cart Count: <span th:text="${cartCount}"></span></p>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Show Name</th>
+        <th>Price</th>
+        <th>Location</th>
+        <th>Representation Date</th>
+        <th>Number of Seats</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="representation : ${cart}">
+        <td th:text="${representation.show.title}"></td>
+        <td th:text="${representation.show.price}">€</td>
+        <td th:text="${representation.location.designation}"></td>
+        <td th:text="${representation.when}"></td>
+        <td>
+          <input type="number" name="seats" min="1" max="10" value="1" />
+        </td>
+        <td>
+          <form th:action="@{/removeFromCart/{id}(id=${representation.id})}" method="post">
+            <button class="btn btn-danger" type="submit">Remove</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <p>Total Price: <span th:text="${total}"></span></p>
+    <a href="/payment" class="btn btn-primary">Proceed to Payment</a>
+  </div>
+</div>
+
+</body>
+</html>
