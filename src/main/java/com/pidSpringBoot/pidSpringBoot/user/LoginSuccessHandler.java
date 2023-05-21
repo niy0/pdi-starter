@@ -13,19 +13,23 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        System.out.println("Nom :"+ customUserDetails.getFullName());
-
-        String redirecturl = request.getContextPath();
-        if( customUserDetails.hasRole("admin")) {
-
-            redirecturl += "/admin/home";
-        } else if( customUserDetails.hasRole("member")) {
-
-            redirecturl += "/member/home";
-        }else {
-            redirecturl += "/";
+        if(authentication != null){
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            System.out.println("Nom :"+ customUserDetails.getFullName());
+    
+            String redirecturl = request.getContextPath();
+            if( customUserDetails.hasRole("admin")) {
+                redirecturl += "/admin/home";
+            } else if( customUserDetails.hasRole("member")) {
+                redirecturl += "/member/home";
+            }else {
+                redirecturl += "/";
+            }
+            response.sendRedirect(redirecturl);
+        }else{
+            System.out.println("Authentication failed");
+            // handle failed authentication here
         }
-        response.sendRedirect(redirecturl);
     }
+    
 }

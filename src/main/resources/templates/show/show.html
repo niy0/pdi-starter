@@ -22,7 +22,7 @@
             <canvas th:unless="${show.posterUrl}" width="200" height="100" style="border:1px solid #000000;"></canvas>
           </div>
           <div class="col-md-6">
-            <p><strong>Lieu de création:</strong> <span><p th:if="${show.location}" th:text="${show.location.designation}">location</p>
+            <p><strong>Lieu de création:</strong></p> <span><p th:if="${show.location}" th:text="${show.location.designation}">location</p>
             <p th:unless="${show.location}"><em>Pas disponible</em></p></span>
             <p><strong>Prix:</strong> <span th:text="${show.price} + ' €'">9.99 €</span></p>
             <p th:if="${show.bookable}"><em>Réservable</em></p>
@@ -32,10 +32,15 @@
 
         <h3>Représentations</h3>
         <ul class="list-group">
-          <li class="list-group-item" th:each="representation : ${show.representations}"
-              th:text="${#temporals.format(representation.when,'dd-MM-yyyy HH:mm')}">12-10-2012 13:30</li>
+          <li class="list-group-item" th:each="representation : ${show.representations}">
+            <span th:text="${#temporals.format(representation.eventTime,'dd-MM-yyyy HH:mm')}">12-10-2012 13:30</span>
+            <form th:action="@{/addToCart/{id}(id=${representation.id})}" method="post">
+              <button class="btn btn-danger" type="submit">Réserver</button>
+            </form>
+          </li>
         </ul>
         <p class="mt-2" th:if="${#lists.size(show.representations)==0}">Aucune représentation</p>
+
 
 
         <h3>Artistes</h3>
@@ -81,7 +86,6 @@
         </div>
 
 
-        <nav class="mt-3"><a th:href="@{/shows}" class="btn btn-secondary">Reservation</a></nav>
         <nav class="mt-3"><a th:href="@{/shows}" class="btn btn-secondary">Retour </a></nav>
 
 

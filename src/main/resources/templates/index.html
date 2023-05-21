@@ -54,10 +54,8 @@
           <p th:if="${show.location}" th:text="${show.location.designation}">location</p>
           <p th:unless="${show.location}"><em>Pas disponible</em></p>
       </td>
-      <td>
-          <p th:if="${show.bookable}" th:text="${show.price} + ' €'">prix</p>
-          <p th:unless="${show.bookable}"><em>Pas disponible</em> </p>
-      </td>
+      <td class="bookable" th:if="${show.bookable}" th:text="${show.price + ' €'}"></td>
+      <td class="not-bookable" th:unless="${show.bookable}"><em>Pas disponible</em></td>
       <td>
           <p th:if="${show.bookable}"><em>oui</em></p>
           <p th:unless="${show.bookable}"><em>non</em></p>

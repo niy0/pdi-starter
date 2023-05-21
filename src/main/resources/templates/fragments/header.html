@@ -8,23 +8,30 @@
   <title>Bienvenue dans le projet pid 2022-2023</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-l3cH4i4vQ09kzxdyxyxQ2Nbx1NzvZPXjqN9sBrXU/HTiDm/6YYwug6kATx6thz/SfYVlI1ODuZ7V9X2mbE2C1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+  <style>
+    .hover-white:hover {
+      color: white !important;
+    }
+  </style>
 </head>
 <body>
 <header th:fragment="header">
   <div class="container">
     <div th:fragment="menu" th:if="${!isAdmin && !isMember}">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#">Projet Réservation</a>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/}">Home</a>
+              <a class="nav-link hover-white"  th:href="@{/}">Accueil</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/}">Catalogue Spectacles</a>
+              <a class="nav-link hover-white" th:href="@{/}">Prochains spectacles</a>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
@@ -33,79 +40,91 @@
             </div>
           </form>
           <div >
-            <a class="btn btn-outline-primary mr-3" th:href="@{/login}">Login</a>
-            <a class="btn btn-outline-primary " th:href="@{/signup}">S'inscrire</a>
+            <a class="btn btn-outline-primary mr-3 hover-white" th:href="@{/login}">Se connecter</a>
+            <a class="btn btn-outline-primary hover-white" th:href="@{/signup}">S'inscrire</a>
           </div>
 
         </div>
       </nav>
     </div>
     <div th:fragment="menu_admin" th:if="${isAdmin} ">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
         <div class="collapse navbar-collapse"  style="justify-content:space-around;">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/admin/home}">Home</a>
+              <a class="nav-link hover-white" th:href="@{/admin/home}">Accueil</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/admin/home}">Catalogue Spectacles</a>
+              <a class="nav-link hover-white" th:href="@{/admin/home}">Prochains spectacles</a>
             </li>
             <form class="form-inline my-2 my-lg-0">
             <div class="input-group">
-              <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
             </div>
           </form>
+          <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle hover-white" th:href="@{/admin/home}" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Administration
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item hover-white" th:href="@{/admin/list_users}">Membres</a></li>
+              <li><a class="dropdown-item hover-white" th:href="@{/admin/home}">Spectacles</a></li>
+              <li><a class="dropdown-item hover-white" th:href="@{/admin/locations}">Lieu</a></li>
+            </ul>
+          </div>
+          
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/admin/admin_home}">Réserver places</a>
+              <a class="nav-link hover-white" th:href="@{/profile}">Profile</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/profile}">Profile</a>
+              <a class="nav-link hover-white" th:href="@{/contact}">Contact</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" th:href="@{/admin/locations}" id="navbarDropdownMenuLink" role="button"
-                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Locations</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" th:href="@{/admin/locations/new}">Add New Location</a></li>
-                <li> <a class="dropdown-item" href="#">Add New Location</a></li>
-              </ul>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" th:href="@{/admin/list_users}">All users</a>
-            </li>
+            <div>
+              <li class="nav-item active">
+                <a th:href="@{/cart}" href="#" class="nav-link hover-white">Panier</a>
+              </li>
+            </div>
           </ul>
           <div style="display:flex;">
             <form th:action="@{/logout}" >
-              <input class="btn btn-outline-warning" type="submit" value="LogOut">
+              <input class="btn btn-outline-warning hover-white" type="submit" value="deconnecter">
             </form>
           </div>
         </div>
       </nav>
     </div>
     <div th:fragment="menu_member" th:if="${isMember}">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
         <div class="collapse navbar-collapse"  style="justify-content:space-around;">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/user/member_home}">Home</a>
+              <a class="nav-link hover-white" th:href="@{/user/member_home}">Accueil</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/user/member_home}">Catalogue Spectacles</a>
+              <a class="nav-link hover-white" th:href="@{/user/member_home}">Prochains spectacles</a>
             </li>
             <form class="form-inline my-2 my-lg-0">
             <div class="input-group">
-             <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+             <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
             </div>
           </form>
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/member_home}">Réserver places</a>
+              <a class="nav-link hover-white" th:href="@{/profile}">Profile</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" th:href="@{/profile}">Profile</a>
+              <a class="nav-link hover-white" th:href="@{/contact}">Contact</a>
             </li>
+            <div>
+              <li class="nav-item active">
+                <a th:href="@{/cart}" href="#" class="nav-link hover-white">Panier</a>
+              </li>
+            </div>
           </ul>
           <div style="display:flex;">
             <form th:action="@{/logout}" >
-              <input class="btn btn-outline-warning" type="submit" value="LogOut">
+              <input class="btn btn-outline-warning hover-white" type="submit" value="deconnecter">
             </form>
           </div>
         </div>

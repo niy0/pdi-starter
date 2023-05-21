@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name="representations")
 public class Representation {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @ManyToMany
@@ -31,7 +31,7 @@ public class Representation {
     /**
      * Date de création de la représentation
      */
-    private LocalDateTime when;
+    private LocalDateTime eventTime;
 
     /**
      * Lieu de prestation de la représentation
@@ -42,9 +42,9 @@ public class Representation {
 
     public Representation() { }
 
-    public Representation(Show show, LocalDateTime when, Location location) {
+    public Representation(Show show, LocalDateTime eventTime, Location location) {
         this.show = show;
-        this.when = when;
+        this.eventTime = eventTime;
         this.location = location;
     }
 
@@ -56,12 +56,12 @@ public class Representation {
         this.show = show;
     }
 
-    public LocalDateTime getWhen() {
-        return when;
+    public LocalDateTime getEventTime() {
+        return eventTime;
     }
 
-    public void setWhen(LocalDateTime when) {
-        this.when = when;
+    public void setEventTime(LocalDateTime eventTime) {
+        this.eventTime =eventTime;
     }
 
     public Location getLocation() {
@@ -101,7 +101,7 @@ public class Representation {
 
     @Override
     public String toString() {
-        return "Representation [id=" + id + ", show=" + show + ", when=" + when
+        return "Representation [id=" + id + ", show=" + show + ", when=" + eventTime
                 + ", location=" + location + "]";
     }
 

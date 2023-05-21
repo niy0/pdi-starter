@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name="artist_type")
 public class ArtistType {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -23,14 +23,14 @@ public class ArtistType {
     @JoinColumn(name="type_id", nullable=false)
     private Type type;
 
-    @ManyToMany(targetEntity= Show.class)
+    @ManyToMany(targetEntity= Show.class,  cascade = CascadeType.ALL)
     @JoinTable(
             name = "artist_type_show",
             joinColumns = @JoinColumn(name = "artist_type_id"),
             inverseJoinColumns = @JoinColumn(name = "show_id"))
     private List<Show> shows = new ArrayList<>();
 
-    protected ArtistType() { }
+    public ArtistType() { }
 
     public ArtistType(Artist artist, Type type, List<Show> shows) {
         this.artist = artist;

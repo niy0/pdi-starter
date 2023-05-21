@@ -1,7 +1,11 @@
 package com.pidSpringBoot.pidSpringBoot.show;
 
 import com.pidSpringBoot.pidSpringBoot.ArtistType.ArtistType;
+import com.pidSpringBoot.pidSpringBoot.Representation.Representation;
+import com.pidSpringBoot.pidSpringBoot.Type.TypeService;
 import com.pidSpringBoot.pidSpringBoot.artist.Artist;
+import com.pidSpringBoot.pidSpringBoot.artist.ArtistRepository;
+import com.pidSpringBoot.pidSpringBoot.artist.ArtistService;
 import com.pidSpringBoot.pidSpringBoot.user.User;
 import com.pidSpringBoot.pidSpringBoot.location.Location;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import com.pidSpringBoot.pidSpringBoot.location.LocationService;
 import com.pidSpringBoot.pidSpringBoot.location.LocationRepository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -28,10 +34,16 @@ public class ShowController {
      @Autowired
     LocationService locationService;
     
-      @Autowired
+    @Autowired
     LocationRepository locationRepository;
-    
-    
+
+    @Autowired
+    ArtistService artistService;
+
+    @Autowired
+   TypeService typeService;
+
+   
 
     @GetMapping("/shows")
     public String index(Model model) {
@@ -42,6 +54,9 @@ public class ShowController {
 
         return "show/index";
     }
+
+    
+
 
     @GetMapping("/shows/{id}")
     public String show(Model model, @PathVariable("id") String id) {
@@ -71,19 +86,60 @@ public class ShowController {
     @GetMapping("/shows/create")
     public String create(Model model) {
         Show show = new Show();
+        List<Artist> artists = artistService.getAllArtists();
+        model.addAttribute("artists", artists);
         model.addAttribute("isAdmin", true);
         model.addAttribute("show", show);
+        model.addAttribute("locations", locationService.listAll());
         return "show/create";
     }
     @PostMapping("/shows/create")
-    public String store(@Valid @ModelAttribute("show") Show show, BindingResult bindingResult, Model model) {
+    public String store(@Valid @ModelAttribute("show")Show show, @RequestParam("representationDateTime[]") List<String> representationDateTimes, Model model) {
+       
+        Optional<Location> optionalLocation = locationRepository.findById(show.getLocationId());
+        Artist author = artistService.getArtist(show.getAuthorId());
+       
+        Artist director = artistService.getArtist(show.getDirectorId());
+        Artist distributor = artistService.getArtist(show.getDistributionId());
+        if(optionalLocation.isPresent()) {
+            show.setLocation(optionalLocation.get());
+        }
+        
+        
+        ArtistType artistType = new ArtistType();
+        artistType.setArtist(author);
+        artistType.setType(typeService.getType("1"));
+        artistType.addShow(show);
+        show.addArtistType(artistType);
+     
+    
+        ArtistType artistType2 = new ArtistType();
+        artistType2.setArtist(director);
+        artistType2.setType(typeService.getType("2"));
+        artistType2.addShow(show);
+        show.addArtistType(artistType2);
 
-        if (bindingResult.hasErrors()) {
-            return "show/create";
+        ArtistType artistType3 = new ArtistType();
+        artistType3.setArtist(distributor);
+        artistType3.setType(typeService.getType("3"));
+        artistType3.addShow(show);
+        show.addArtistType(artistType3);
+        
+        
+        for(String representationDateTime: representationDateTimes) {
+            System.out.println("--------------------"+representationDateTime);
+            Representation representation = new Representation();
+            LocalDateTime dateTime = LocalDateTime.parse(representationDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            representation.setEventTime(dateTime);
+            representation.setShow(show);
+            representation.setShow(show);
+            representation.setLocation(optionalLocation.get());
+            show.getRepresentations().add(representation);
         }
 
         service.add(show);
-
+        
+        model.addAttribute("isAdmin", true);
         return "redirect:/shows/" + show.getId();
     }
     @GetMapping("/shows/edit/{id}")
@@ -93,7 +149,8 @@ public class ShowController {
         if (repository.findById(id).isPresent()){
             show = repository.findById(id).get();
         }
-     
+        List<Artist> artists = artistService.getAllArtists();
+        model.addAttribute("artists", artists);
         model.addAttribute("show", show);
         model.addAttribute("locations", locationService.listAll());
 
@@ -101,30 +158,65 @@ public class ShowController {
         return "show/edit";
     }
     @PutMapping("/shows/edit/{id}")
-    public String updateShow(@PathVariable("id") Long id, @ModelAttribute("show") Show show, Model model) {
-        int locationId = show.getLocationId();
-        Optional<Location> optionalLocation = locationRepository.findById(locationId);
+    public String updateShow(@PathVariable("id") Long id, @ModelAttribute("show") Show show,@RequestParam("representationDateTime[]") List<String> representationDateTimes, Model model) {
+        Optional<Location> optionalLocation = locationRepository.findById(show.getLocationId());
+        Artist author = artistService.getArtist(show.getAuthorId());
+       
+        Artist director = artistService.getArtist(show.getDirectorId());
+        Artist distributor = artistService.getArtist(show.getDistributionId());
         if(optionalLocation.isPresent()) {
             show.setLocation(optionalLocation.get());
         }
-            service.update(show);
-            model.addAttribute("isAdmin", true);
-            return "redirect:/shows/" + id;
+        
+        
+        ArtistType artistType = new ArtistType();
+        artistType.setArtist(author);
+        artistType.setType(typeService.getType("1"));
+        artistType.addShow(show);
+        show.addArtistType(artistType);
+     
     
+        ArtistType artistType2 = new ArtistType();
+        artistType2.setArtist(director);
+        artistType2.setType(typeService.getType("2"));
+        artistType2.addShow(show);
+        show.addArtistType(artistType2);
+
+        ArtistType artistType3 = new ArtistType();
+        artistType3.setArtist(distributor);
+        artistType3.setType(typeService.getType("3"));
+        artistType3.addShow(show);
+        show.addArtistType(artistType3);
+        
+        
+        for(String representationDateTime: representationDateTimes) {
+            System.out.println("--------------------"+representationDateTime);
+            Representation representation = new Representation();
+            LocalDateTime dateTime = LocalDateTime.parse(representationDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            representation.setEventTime(dateTime);
+            representation.setShow(show);
+            representation.setShow(show);
+            representation.setLocation(optionalLocation.get());
+            show.getRepresentations().add(representation);
+        }
+
+        service.add(show);
+        
+        model.addAttribute("isAdmin", true);
+        return "redirect:/shows/" + show.getId();
     }
 
      
 
-   @DeleteMapping("/shows/delete/{id}")
-public ResponseEntity<?> delete(@PathVariable("id") String id, Model model) {
+@DeleteMapping("/shows/delete/{id}")
+public String delete(@PathVariable("id") String id, Model model) {
     Optional<Show> existing = repository.findById(Long.parseLong(id));
 
     if(existing.isPresent()) { 
         service.deleteShow(id);
-        return ResponseEntity.ok().build();
+        
     }
-
-    return ResponseEntity.notFound().build();
+    return "redirect:/admin/home" ;
 }
 
 

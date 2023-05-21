@@ -51,5 +51,13 @@ public class RepresentationService {
     public List<Representation> getFromShow(Show show) {
         return repository.findByShow(show);
     }
+
+    
+
+    public Optional<Representation> getRepresentationById(long id){
+        return repository.findById(id);
+    }
 }
+
+
 
