@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+      layout:decorate="~{layouts/main}"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Home</title>
@@ -27,6 +27,7 @@
 
 <div class="container">
     <div layout:fragment="content">
+        
         <h1 th:text="${title}">Liste des spectacles</h1>
 
         <table id="catalogue" class="display" style="width:100%">

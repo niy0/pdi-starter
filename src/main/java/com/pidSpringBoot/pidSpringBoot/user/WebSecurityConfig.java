@@ -1,5 +1,6 @@
 package com.pidSpringBoot.pidSpringBoot.user;
 
+import org.apache.coyote.http11.Http11InputBuffer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -58,11 +60,14 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChainConfig(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authenticationProvider(authenticationProvider());
-        httpSecurity.authorizeRequests().
-                requestMatchers("/","/signup").permitAll()
-                .requestMatchers("/admin**").hasAuthority("admin")
-                .requestMatchers("/member**").hasAuthority("member")
-                //.requestMatchers("/member/**").hasAnyAuthority("Member","Admin")
+        httpSecurity.csrf().disable().authorizeRequests()
+                .requestMatchers("/images/**").permitAll()
+                .requestMatchers("/js/**").permitAll()
+                .requestMatchers("/webjars/**").permitAll()
+                .requestMatchers("/","/signup","/process_signup","/rss").permitAll()
+                .requestMatchers("/admin/**").hasAuthority("admin")
+                .requestMatchers("/member/**").hasAuthority("member")
+                .anyRequest().authenticated() 
                 .and()
                 .formLogin()
                     .usernameParameter("login")
@@ -74,9 +79,6 @@ public class WebSecurityConfig {
                     .permitAll();
         return httpSecurity.build();
     }
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/images/**","/js/**","/webjars/**");
-    }
+
 
 }

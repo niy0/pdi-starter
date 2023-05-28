@@ -1,12 +1,10 @@
 package com.pidSpringBoot.pidSpringBoot.user;
 
-import com.pidSpringBoot.pidSpringBoot.location.Location;
 import com.pidSpringBoot.pidSpringBoot.location.LocationNotFoundException;
 import com.pidSpringBoot.pidSpringBoot.location.LocationService;
 import com.pidSpringBoot.pidSpringBoot.role.Role;
 import com.pidSpringBoot.pidSpringBoot.show.Show;
 import com.pidSpringBoot.pidSpringBoot.show.ShowService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +54,6 @@ public class UserController {
     public String editProfile(@PathVariable("id") Integer id, Model model){
             User userToEdit = userRepository.findById(id).get();
             List<Role> roleList = customUserDetailsService.listRoles();
-            model.addAttribute("isAdmin", true);
             model.addAttribute("userToEdit", userToEdit);
             model.addAttribute("listRoles", roleList);
             return "user/edit";
@@ -63,11 +61,10 @@ public class UserController {
     }
 
 
-
+    
     @GetMapping("/admin/home")
     public String homeAdmin(Model model){
         List<Show> shows = showService.getAll();
-        model.addAttribute("isAdmin", true);
         model.addAttribute("shows",shows);
         model.addAttribute("title", "Liste des spectacles");
         return "admin/admin_home";
@@ -77,7 +74,6 @@ public class UserController {
     public String adminEditUser(@PathVariable("id") Integer id, Model model){
             User userToEdit = userRepository.findById(id).get();
             List<Role> roleList = customUserDetailsService.listRoles();
-            model.addAttribute("isAdmin", true);
             model.addAttribute("userToEdit", userToEdit);
             model.addAttribute("listRoles", roleList);
             return "admin/admin_edit_user";
@@ -86,8 +82,6 @@ public class UserController {
     @GetMapping("/member/home")
     public String homeMember(Model model){
         List<Show> shows = showService.getAll();
-        model.addAttribute("isAdmin", false);
-        model.addAttribute("isMember", true);
         model.addAttribute("shows",shows);
         model.addAttribute("title", "Liste des spectacles");
         return "user/index";
@@ -100,8 +94,7 @@ public class UserController {
         User user = userService.findUser(currentUser);
         System.out.println("---------------------------User = " + user);
         model.addAttribute("user",user);
-        model.addAttribute("isMember", true);
-        model.addAttribute("isAdmin", false);
+        
         return "user/profile";
     }
 
@@ -109,7 +102,6 @@ public class UserController {
     public String showListUsers(Model model){
 
         List<User> listUsers = (List<User>) userRepository.findAll();
-        model.addAttribute("isAdmin", true);
         model.addAttribute("listUsers", listUsers);
         return "admin/list_users";
     }
@@ -123,8 +115,6 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message", "Login existe déjà !");
             return "redirect:/signup";
         } else {
-            model.addAttribute("isMember", true);
-            model.addAttribute("isAdmin", false);
             customUserDetailsService.setPasswordEncoder(user);//encoder le password
             customUserDetailsService.registerDefaultUser(user);//mettre par defaut role "Member"
             return "user/signup_success";
@@ -136,7 +126,6 @@ public class UserController {
             Optional<User> user = userService.getUser(id);
 
             model.addAttribute("user", user);
-            model.addAttribute("isMember", true);
             model.addAttribute("title", "Fiche d'un user");
 
             return "user/show";
@@ -147,7 +136,6 @@ public class UserController {
             User user = new User();
 
             model.addAttribute("user", user);
-            model.addAttribute("isMember", true);
 
             return "user/create";
         }
@@ -170,7 +158,7 @@ public class UserController {
         @DeleteMapping("/users/{id}")
         public String delete(@PathVariable("id") String id, Model model) throws LocationNotFoundException {
                 userService.deleteUser(id);
-                model.addAttribute("isAdmin", true);
+                
             return "redirect:/admin/list_users";
         }
 

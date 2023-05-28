@@ -103,25 +103,25 @@ public class Show {
         this.locationId = id;
     }
     public int getAuthorId() {
-        return locationId;
+        return authorId;
     }
 
     public void setAuthorId(int id) {
-        this.locationId = id;
+        this.authorId = id;
     }
     public int getDirectorId() {
-        return locationId;
+        return directorId;
     }
 
     public void setDirectorId(int id) {
-        this.locationId = id;
+        this.directorId = id;
     }
     public int getDistributionId() {
-        return locationId;
+        return distributionId;
     }
 
     public void setDistributionId(int id) {
-        this.locationId = id;
+        this.distributionId = id;
     }
     public String getSlug() {
         return slug;

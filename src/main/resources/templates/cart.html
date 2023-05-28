@@ -1,47 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}">
 <head>
+  <meta charset="utf-8" />
   <title>panier</title>
+  <meta name="description" content="A demo of a card payment on Stripe" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>panier</title>
+  <link rel="stylesheet" href="global.css" />
+  <script src="/cssandjs/client.js" defer></script>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+  <script defer>
+
+
+    function calculateTotal() {
+      var total = 0.0;
+      document.querySelectorAll('input[name="seats"]').forEach(function(input) {
+        var id = input.id.split('_')[1];
+        var price = parseFloat(document.getElementById('price_' + id).textContent);
+        var seats = parseInt(input.value);
+        total += price * seats;
+      });
+      document.getElementById('totalValue').textContent = total.toFixed(2);
+    }
+
+    window.addEventListener('DOMContentLoaded', calculateTotal);
+
+    
+    document.addEventListener('input', function(e) {
+      if (e.target.name === 'seats') {
+        calculateTotal();
+      }
+    });
+
+  </script>
+  <script>
+    function redirectToPayment() {
+      var total = document.getElementById('totalValue').textContent;
+      var totalInt = parseInt(total);
+      var paymentUrl = '/checkout?amount=' + totalInt;
+      window.location.href = paymentUrl;
+    }
+  </script>
 </head>
 <body>
 <div class="container">
   <div layout:fragment="content">
-    <h1>Panier</h1>
-    <p>Cart Count: <span th:text="${cartCount}"></span></p>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Show Name</th>
-        <th>Price</th>
-        <th>Location</th>
-        <th>Representation Date</th>
-        <th>Number of Seats</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="representation : ${cart}">
-        <td th:text="${representation.show.title}"></td>
-        <td th:text="${representation.show.price}">€</td>
-        <td th:text="${representation.location.designation}"></td>
-        <td th:text="${representation.eventTime}"></td>
-        <td>
-          <input type="number" name="seats" min="1" max="10" value="1" />
-        </td>
-        <td>
+    <h1>Panier: <span th:text="${cartCount}"></span></h1>
+
+    <div class="card-deck">
+      <div th:each="representation : ${cart}" class="card">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${representation.show.title}"></h5>
+          <h6 class="card-subtitle mb-2 text-muted">Prix: <span th:text="${representation.show.price}" id="price_${representation.id}">€</span></h6>
+          <p class="card-text">Lieu: <span th:text="${representation.location.designation}"></span></p>
+          <p class="card-text">Date: <span th:text="${representation.eventTime}"></span></p>
+          <div class="form-group">
+            <label for="seats_${representation.id}">Siège</label>
+            <input id="seats_${representation.id}" type="number" name="seats" min="1" max="10" value="1" class="form-control"/>
+          </div>
           <form th:action="@{/removeFromCart/{id}(id=${representation.id})}" method="post">
-            <button class="btn btn-danger" type="submit">Remove</button>
+            <button class="btn btn-danger" type="submit">Supprimer</button>
           </form>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <p>Total Price: <span th:text="${total}"></span></p>
-    <a href="/payment" class="btn btn-primary">Proceed to Payment</a>
+        </div>
+      </div>
+    </div>
+    <p>Total Price: <span id="totalValue">0.00</span></p>
+    <a class="btn btn-primary" onclick="redirectToPayment()" >Paiement</a>
+
+    <nav class="mt-3">
+      <button class="btn btn-secondary" onclick="goBack()">Retour</button>
+    </nav>
+  
+    <script>
+      function goBack() {
+          window.history.back();
+      }
+    </script>
+
+
   </div>
 </div>
 
 </body>
 </html>
+

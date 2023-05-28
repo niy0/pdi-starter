@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" th:text="${user.firstName} +' '+ ${user.lastName}">Bob Sull</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Informations</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Page de profile de <span th:text="${user.firstName}"> </h6>
                 <p class="card-text"><strong>Username:</strong> <span th:text="${user.login}">bob.sull</span></p>
                 <p class="card-text"><strong>Firstname:</strong> <span th:text="${user.firstName}">Bob</span></p>
                 <p class="card-text"><strong>LastName:</strong> <span th:text="${user.lastName}">Sull</span></p>
@@ -21,6 +21,16 @@
                <a class="btn btn-outline-warning" th:href="@{'/profile/edit/'+ ${user.id}}">Modify</a>
             </div>
         </div>
+        <nav class="mt-3">
+            <button class="btn btn-secondary" onclick="goBack()">Retour</button>
+          </nav>
+        
+          <script>
+            function goBack() {
+                window.history.back();
+            }
+          </script>
+  
     </div>
 </div>
 </body>
