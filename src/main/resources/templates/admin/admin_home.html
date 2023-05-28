@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/main}" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      layout:decorate="~{layouts/main}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Bienvenue dans le page Admin</title>
@@ -28,6 +28,7 @@
 
 <div class="container">
     <div layout:fragment="content">
+
         <h1 th:text="${title}">Liste des spectacles</h1>
 
         <a class="btn btn-primary mb-3" th:href="@{/shows/create}">Ajouter spectacle</a>
@@ -79,6 +80,7 @@
             <tfoot>
             </tfoot>
         </table>
+        
     </div>
 </div>
 

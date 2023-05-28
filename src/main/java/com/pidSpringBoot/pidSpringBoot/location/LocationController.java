@@ -16,7 +16,6 @@ public class LocationController {
     public String showLocationList(Model model){
         List<Location> listLocations = service.listAll();
         model.addAttribute("listLocations", listLocations);
-        model.addAttribute("isAdmin", true);
         return "/location/locations";
     }
 
@@ -24,14 +23,12 @@ public class LocationController {
     public String showNewForm(Model model){
         model.addAttribute("location", new Location());
         model.addAttribute("pageTitle", "Add new location");
-        model.addAttribute("isAdmin", true);
         return "location/location_form";
     }
 
     @PostMapping("/admin/locations/save")
     public String saveLocation(Model model,Location location, RedirectAttributes redirectAttributes){
         service.save(location);
-        model.addAttribute("isAdmin", true);
         redirectAttributes.addFlashAttribute("message", "Location modifier !");
         return "redirect:/admin/locations";
     }
@@ -40,7 +37,6 @@ public class LocationController {
     public String showEditLocation(@PathVariable("id") Integer id, Model model , RedirectAttributes redirectAttributes){
         try {
             Location location = service.get(id);
-            model.addAttribute("isAdmin", true);
             model.addAttribute("location", location);
             model.addAttribute("location id", location.getLocality().getId());
             model.addAttribute("pageTitle", "Edit location (ID: "+id+")");

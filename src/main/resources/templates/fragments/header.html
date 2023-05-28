@@ -1,15 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
-<html xmlns:th="http://www.thymeleaf.org">
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Bienvenue dans le projet pid 2022-2023</title>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-l3cH4i4vQ09kzxdyxyxQ2Nbx1NzvZPXjqN9sBrXU/HTiDm/6YYwug6kATx6thz/SfYVlI1ODuZ7V9X2mbE2C1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
   <style>
     .hover-white:hover {
       color: white !important;
@@ -19,123 +14,118 @@
 <body>
 <header th:fragment="header">
   <div class="container">
-    <div th:fragment="menu" th:if="${!isAdmin && !isMember}">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link hover-white"  th:href="@{/}">Accueil</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/}">Prochains spectacles</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <div class="input-group">
-              <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <div th:fragment="menu" >
+      <div sec:authorize = "!isAuthenticated()" >
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link hover-white"  th:href="@{/}">Accueil</a>
+                </li>
+                <li class="nav-item active" >
+                  <a class="nav-link hover-white" th:href="@{/}">Prochains spectacles</a>
+                </li>
+                <li>
+                  <form class="form-inline my-2 my-lg-0">
+                    <div class="input-group">
+                      <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    </div>
+                  </form> 
+                </li>
+                <div>
+                  <a class="btn btn-outline-primary mr-3 hover-white" th:href="@{/login}">Se connecter</a>
+                  <a class="btn btn-outline-primary hover-white" th:href="@{/signup}">S'inscrire</a>
+                </div>
+              </ul> 
             </div>
-          </form>
-          <div >
-            <a class="btn btn-outline-primary mr-3 hover-white" th:href="@{/login}">Se connecter</a>
-            <a class="btn btn-outline-primary hover-white" th:href="@{/signup}">S'inscrire</a>
+          </nav>
+        </div>
+        <div sec:authorize = "hasAuthority('admin')" >
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link hover-white"  th:href="@{/admin/home}">Accueil</a>
+                  </li>
+                  <li class="nav-item active" >
+                    <a class="nav-link hover-white" th:href="@{/admin/home}">Prochains spectacles</a>
+                  </li>
+                  <li>
+                    <form class="form-inline my-2 my-lg-0">
+                      <div class="input-group">
+                        <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                      </div>
+                    </form> 
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link hover-white" th:href="@{/admin/list_users}">Administration</a>
+                  </li>
+                  <li class="nav-item active" >
+                    <a class="nav-link hover-white" th:href="@{/profile}">Profile</a>
+                  </li>
+                  <li class="nav-item active" >
+                    <a th:href="@{/cart}" href="#" class="nav-link hover-white">Panier</a>
+                  </li>
+                  <li class="nav-item active" >
+                    <form th:action="@{/logout}" >
+                      <input class="btn btn-outline-warning hover-white" type="submit" value="deconnecter">
+                    </form>
+                  </li>
+                </ul> 
+              </div>
+            </nav>
           </div>
 
-        </div>
-      </nav>
-    </div>
-    <div th:fragment="menu_admin" th:if="${isAdmin} ">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
-        <div class="collapse navbar-collapse"  style="justify-content:space-around;">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/admin/home}">Accueil</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/admin/home}">Prochains spectacles</a>
-            </li>
-            <form class="form-inline my-2 my-lg-0">
-            <div class="input-group">
-              <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
+          <div sec:authorize = "hasAuthority('member')" >
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link hover-white"  th:href="@{/member/home}">Accueil</a>
+                    </li>
+                    <li class="nav-item active" >
+                      <a class="nav-link hover-white" th:href="@{/member/home}">Prochains spectacles</a>
+                    </li>
+                    <li>
+                      <form class="form-inline my-2 my-lg-0">
+                        <div class="input-group">
+                          <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        </div>
+                      </form> 
+                    </li>
+                    
+                    <li class="nav-item active" >
+                      <a class="nav-link hover-white" th:href="@{/profile}">Profile</a>
+                    </li>
+                    <li class="nav-item active" >
+                      <a th:href="@{/cart}" href="#" class="nav-link hover-white">Panier</a>
+                    </li>
+                    <li class="nav-item active" >
+                      <form th:action="@{/logout}" >
+                        <input class="btn btn-outline-warning hover-white" type="submit" value="deconnecter">
+                      </form>
+                    </li>
+                  </ul> 
+                </div>
+              </nav>
             </div>
-          </form>
-          <div class="dropdown">
-            <a class="btn btn-secondary dropdown-toggle hover-white" th:href="@{/admin/home}" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              Administration
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item hover-white" th:href="@{/admin/list_users}">Membres</a></li>
-              <li><a class="dropdown-item hover-white" th:href="@{/admin/home}">Spectacles</a></li>
-              <li><a class="dropdown-item hover-white" th:href="@{/admin/locations}">Lieu</a></li>
-            </ul>
-          </div>
-          
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/profile}">Profile</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/contact}">Contact</a>
-            </li>
-            <div>
-              <li class="nav-item active">
-                <a th:href="@{/cart}" href="#" class="nav-link hover-white">Panier</a>
-              </li>
-            </div>
-          </ul>
-          <div style="display:flex;">
-            <form th:action="@{/logout}" >
-              <input class="btn btn-outline-warning hover-white" type="submit" value="deconnecter">
-            </form>
-          </div>
-        </div>
-      </nav>
     </div>
-    <div th:fragment="menu_member" th:if="${isMember}">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand hover-white" href="#">Projet Réservation</a>
-        <div class="collapse navbar-collapse"  style="justify-content:space-around;">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/user/member_home}">Accueil</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/user/member_home}">Prochains spectacles</a>
-            </li>
-            <form class="form-inline my-2 my-lg-0">
-            <div class="input-group">
-             <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
-            </div>
-          </form>
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/profile}">Profile</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link hover-white" th:href="@{/contact}">Contact</a>
-            </li>
-            <div>
-              <li class="nav-item active">
-                <a th:href="@{/cart}" href="#" class="nav-link hover-white">Panier</a>
-              </li>
-            </div>
-          </ul>
-          <div style="display:flex;">
-            <form th:action="@{/logout}" >
-              <input class="btn btn-outline-warning hover-white" type="submit" value="deconnecter">
-            </form>
-          </div>
-        </div>
-      </nav>
     </div>
-
-    </div>
-  </nav>
-</div>
+  </div>
 </header>
-<script src="https://codes.jquery.com/jquery-3.2.1.sli.min.js" integrity="" crossorigin="anonymous"></script>
-
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>

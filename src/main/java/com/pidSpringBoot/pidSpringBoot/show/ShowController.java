@@ -77,7 +77,7 @@ public class ShowController {
 
         model.addAttribute("collaborateurs", collaborateurs);
         model.addAttribute("show", show);
-        model.addAttribute("isAdmin", true);
+        
         model.addAttribute("title", "Fiche d'un spectacle");
 
         return "show/show";
@@ -88,7 +88,6 @@ public class ShowController {
         Show show = new Show();
         List<Artist> artists = artistService.getAllArtists();
         model.addAttribute("artists", artists);
-        model.addAttribute("isAdmin", true);
         model.addAttribute("show", show);
         model.addAttribute("locations", locationService.listAll());
         return "show/create";
@@ -138,8 +137,7 @@ public class ShowController {
         }
 
         service.add(show);
-        
-        model.addAttribute("isAdmin", true);
+    
         return "redirect:/shows/" + show.getId();
     }
     @GetMapping("/shows/edit/{id}")
@@ -154,16 +152,18 @@ public class ShowController {
         model.addAttribute("show", show);
         model.addAttribute("locations", locationService.listAll());
 
-        model.addAttribute("isAdmin", true);
+        
         return "show/edit";
     }
     @PutMapping("/shows/edit/{id}")
     public String updateShow(@PathVariable("id") Long id, @ModelAttribute("show") Show show,@RequestParam("representationDateTime[]") List<String> representationDateTimes, Model model) {
         Optional<Location> optionalLocation = locationRepository.findById(show.getLocationId());
         Artist author = artistService.getArtist(show.getAuthorId());
-       
+        System.out.println("-----------------------------------------"+author);
         Artist director = artistService.getArtist(show.getDirectorId());
+        System.out.println("---------------------------------------"+director);
         Artist distributor = artistService.getArtist(show.getDistributionId());
+        System.out.println("---------------------------------------"+distributor);
         if(optionalLocation.isPresent()) {
             show.setLocation(optionalLocation.get());
         }
@@ -201,8 +201,6 @@ public class ShowController {
         }
 
         service.add(show);
-        
-        model.addAttribute("isAdmin", true);
         return "redirect:/shows/" + show.getId();
     }
 

@@ -86,7 +86,15 @@
         </div>
 
 
-        <nav class="mt-3"><a th:href="@{/shows}" class="btn btn-secondary">Retour </a></nav>
+        <nav class="mt-3">
+          <button class="btn btn-secondary" onclick="goBack()">Retour</button>
+        </nav>
+      
+        <script>
+          function goBack() {
+              window.history.back();
+          }
+        </script>
 
 
       </div>
